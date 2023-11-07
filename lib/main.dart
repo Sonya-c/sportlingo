@@ -11,6 +11,8 @@ void main() {
     ),
   );
 
+  WidgetsFlutterBinding.ensureInitialized();
+
   Get.put(AuthController());
 
   runApp(const App());

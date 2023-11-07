@@ -7,6 +7,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Column(
+        key: Key("homePage"),
         children: [Text("Home Page")],
       ),
     );
