@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportlingo/ui/controllers/auth_controller.dart';
-import 'package:sportlingo/ui/pages/authentication/singup_page.dart';
 import 'package:sportlingo/ui/utils/colors.dart';
 import 'package:sportlingo/ui/utils/scroll_layout.dart';
 import 'package:sportlingo/ui/utils/text_styles.dart';
@@ -37,6 +36,7 @@ class _LoginPageState extends State<LoginPage> {
                 "Login",
                 style: fasterOne['3xl']?.copyWith(
                   color: Colors.white,
+                  height: 3,
                 ),
               ),
               Padding(
@@ -82,7 +82,9 @@ class _LoginPageState extends State<LoginPage> {
                 child: Text(
                   "Login",
                   style: sora['n']!.copyWith(
-                      color: Colors.black, fontWeight: FontWeight.bold),
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               const SizedBox(height: 10),
@@ -110,8 +112,10 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () async {
                   await _authController.loginWithGoogle();
                 },
-                child: Text("Google",
-                    style: sora['n']!.copyWith(color: Colors.white)),
+                child: Text(
+                  "Google",
+                  style: sora['n']!.copyWith(color: Colors.white),
+                ),
               ),
               const SizedBox(height: 10),
               Row(
@@ -124,11 +128,15 @@ class _LoginPageState extends State<LoginPage> {
                   TextButton(
                     key: const Key("loginPageSingupButton"),
                     onPressed: () {
-                      Get.to(() => const SingupPage());
+                      Get.toNamed('/singup');
                     },
-                    child: Text("Sign Up",
-                        style: sora['s']!.copyWith(
-                            color: Colors.white, fontWeight: FontWeight.bold)),
+                    child: Text(
+                      "Sign Up",
+                      style: sora['s']!.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   )
                 ],
               )

@@ -12,8 +12,8 @@ void main() {
     testWidgets("Form elements", (WidgetTester tester) async {
       Get.put(AuthController());
 
-      await tester.pumpWidget(const GetMaterialApp(
-        home: LoginPage(),
+      await tester.pumpWidget(const App(
+        initialRoute: '/login',
       ));
 
       expect(find.byKey(const Key("loginPage")), findsOneWidget);
@@ -29,10 +29,9 @@ void main() {
         (WidgetTester tester) async {
       Get.put(AuthController());
 
-      await tester.pumpWidget(const GetMaterialApp(
-        home: LoginPage(),
+      await tester.pumpWidget(const App(
+        initialRoute: '/login',
       ));
-
       await tester.tap(find.byKey(const Key("loginPageSingupButton")));
       await tester.pumpAndSettle();
       expect(find.byType(SingupPage), findsOneWidget);
@@ -43,8 +42,8 @@ void main() {
       (WidgetTester tester) async {
         Get.put(AuthController());
 
-        await tester.pumpWidget(const GetMaterialApp(
-          home: LoginPage(),
+        await tester.pumpWidget(const App(
+          initialRoute: '/login',
         ));
 
         await tester.enterText(find.byKey(const Key("loginPageEmailField")),
@@ -65,8 +64,8 @@ void main() {
       (WidgetTester tester) async {
         Get.put(AuthController());
 
-        await tester.pumpWidget(const GetMaterialApp(
-          home: LoginPage(),
+        await tester.pumpWidget(const App(
+          initialRoute: '/login',
         ));
 
         await tester.enterText(
@@ -89,8 +88,8 @@ void main() {
       (WidgetTester tester) async {
         Get.put(AuthController());
 
-        await tester.pumpWidget(const GetMaterialApp(
-          home: LoginPage(),
+        await tester.pumpWidget(const App(
+          initialRoute: '/login',
         ));
 
         await tester.enterText(find.byKey(const Key("loginPageEmailField")),
@@ -114,7 +113,9 @@ void main() {
       (WidgetTester tester) async {
         Get.put(AuthController());
 
-        await tester.pumpWidget(const App());
+        await tester.pumpWidget(const App(
+          initialRoute: '/login',
+        ));
 
         await tester.enterText(
             find.byKey(const Key("loginPageEmailField")), "email@domain.tld");
@@ -132,25 +133,129 @@ void main() {
   });
 
   group("SingupPage test", () {
+    testWidgets("Form elements", (WidgetTester tester) async {
+      Get.put(AuthController());
+
+      await tester.pumpWidget(const App(
+        initialRoute: '/singup',
+      ));
+
+      expect(find.byKey(const Key("singupPage")), findsOneWidget);
+      expect(find.byKey(const Key("singupPageEmailField")), findsOneWidget);
+      expect(find.byKey(const Key("singupPagePasswordField")), findsOneWidget);
+      expect(find.byKey(const Key("singupPageSingupButton")), findsOneWidget);
+      expect(find.byKey(const Key("singupPageSingupWithGoogleButton")),
+          findsOneWidget);
+      expect(find.byKey(const Key("singupPageLoginButton")), findsOneWidget);
+    });
+
     testWidgets("WHEN user click 'login' THEN go to loginPage",
-        (WidgetTester tester) async {});
+        (WidgetTester tester) async {
+      Get.put(AuthController());
+
+      await tester.pumpWidget(const App(
+        initialRoute: '/singup',
+      ));
+
+      await tester.tap(find.byKey(const Key("singupPageLoginButton")));
+
+      await tester.pumpAndSettle();
+
+      expect(find.byType(LoginPage), findsOneWidget);
+    });
 
     testWidgets(
       "GIVEN a wrong email, WHEN user trys to login THEN show an error",
-      (WidgetTester tester) async {},
+      (WidgetTester tester) async {
+        Get.put(AuthController());
+
+        await tester.pumpWidget(const App(
+          initialRoute: '/singup',
+        ));
+
+        await tester.enterText(find.byKey(const Key("singupPageEmailField")),
+            "this is a wrong email");
+
+        await tester.enterText(find.byKey(const Key("singupPagePasswordField")),
+            "thispasswordisokay123");
+
+        await tester.tap(find.byKey(const Key("singupPageSingupButton")));
+
+        await tester.pumpAndSettle();
+
+        expect(find.text("Please enter a valid email"), findsOneWidget);
+      },
     );
     testWidgets(
       "GIVEN a weak password, WHEN user trys to login THEN show an error",
-      (WidgetTester tester) async {},
+      (WidgetTester tester) async {
+        Get.put(AuthController());
+
+        await tester.pumpWidget(const App(
+          initialRoute: '/singup',
+        ));
+
+        await tester.enterText(
+            find.byKey(const Key("singupPageEmailField")), "email@domain.tld");
+
+        await tester.enterText(find.byKey(const Key("singupPagePasswordField")),
+            "123"); // this password is too short
+
+        await tester.tap(find.byKey(const Key("singupPageSingupButton")));
+
+        await tester.pumpAndSettle();
+
+        expect(find.text("Password must be at least 6 characters long"),
+            findsOneWidget);
+      },
     );
 
     testWidgets(
       "GIVEN a wrong email and weak password, WHEN user trys to login THEN show TWO errors",
-      (WidgetTester tester) async {},
+      (WidgetTester tester) async {
+        Get.put(AuthController());
+
+        await tester.pumpWidget(const App(
+          initialRoute: '/singup',
+        ));
+
+        await tester.enterText(find.byKey(const Key("singupPageEmailField")),
+            "this is a wrong email");
+
+        await tester.enterText(find.byKey(const Key("singupPagePasswordField")),
+            "123"); // this password is too short
+
+        await tester.tap(find.byKey(const Key("singupPageSingupButton")));
+
+        await tester.pumpAndSettle();
+
+        expect(find.text("Please enter a valid email"), findsOneWidget);
+
+        expect(find.text("Password must be at least 6 characters long"),
+            findsOneWidget);
+      },
     );
     testWidgets(
       "GIVEN a valid email and password, WHEN user trys to login THEN singup AND login",
-      (WidgetTester tester) async {},
+      (WidgetTester tester) async {
+        Get.put(AuthController());
+
+        await tester.pumpWidget(const App(
+          initialRoute: '/singup',
+        ));
+
+        await tester.enterText(
+            find.byKey(const Key("singupPageEmailField")), "email@domain.tld");
+
+        await tester.enterText(
+            find.byKey(const Key("singupPagePasswordField")), "123456");
+
+        await tester.tap(find.byKey(const Key("singupPageSingupButton")));
+
+        await tester.pumpAndSettle(const Duration(seconds: 3));
+
+        expect(find.byType(HomePage), findsOneWidget);
+      },
     );
   });
 }
