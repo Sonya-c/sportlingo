@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportlingo/ui/controllers/auth_controller.dart';
+import 'package:sportlingo/ui/pages/content/content.dart';
 import 'package:sportlingo/ui/utils/colors.dart';
 import 'package:sportlingo/ui/utils/scroll_layout.dart';
 import 'package:sportlingo/ui/utils/text_styles.dart';
@@ -22,6 +23,9 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    ever(_authController.logged,
+        (isLogged) => isLogged ? Get.to(() => Content()) : null);
+
     return ScrollLayout(
       key: const Key("loginPage"),
       backgroundGradient: orangeMagentaGradient,
@@ -34,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               Text(
                 "Login",
-                style: fasterOne['3xl']?.copyWith(
+                style: fasterOne['5xl']?.copyWith(
                   color: Colors.white,
                   height: 3,
                 ),
@@ -55,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 40),
               FilledButton(
                 key: const Key("loginPageLoginButton"),
                 style: ButtonStyle(
@@ -87,12 +91,12 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
               Text(
                 "Or login with",
                 style: sora['s']!.copyWith(color: Colors.white),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
               OutlinedButton(
                 key: const Key("loginPageLoginWithGoogleButton"),
                 style: ButtonStyle(
@@ -117,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                   style: sora['n']!.copyWith(color: Colors.white),
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 40),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

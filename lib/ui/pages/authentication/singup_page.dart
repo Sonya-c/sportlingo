@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportlingo/ui/controllers/auth_controller.dart';
+import 'package:sportlingo/ui/pages/content/content.dart';
 import 'package:sportlingo/ui/utils/colors.dart';
 import 'package:sportlingo/ui/utils/scroll_layout.dart';
 import 'package:sportlingo/ui/utils/text_styles.dart';
@@ -23,6 +24,9 @@ class _SingupPageState extends State<SingupPage> {
 
   @override
   Widget build(BuildContext context) {
+    ever(_authController.logged,
+        (isLogged) => isLogged ? Get.to(() => Content()) : null);
+
     return ScrollLayout(
       key: const Key("singupPage"),
       backgroundGradient: orangeMagentaGradient,
@@ -34,8 +38,8 @@ class _SingupPageState extends State<SingupPage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Text(
-                "Sing Up",
-                style: fasterOne['3xl']?.copyWith(
+                "Sign Up",
+                style: fasterOne['5xl']?.copyWith(
                   color: Colors.white,
                   height: 3,
                 ),
@@ -82,7 +86,7 @@ class _SingupPageState extends State<SingupPage> {
                   ],
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 40),
               FilledButton(
                 key: const Key("singupPageSingupButton"),
                 style: ButtonStyle(
@@ -108,21 +112,21 @@ class _SingupPageState extends State<SingupPage> {
                   }
                 },
                 child: Text(
-                  "Singup",
+                  "Signup",
                   style: sora['n']!.copyWith(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
               Text(
-                "Or sing up with",
+                "Or sign up with",
                 style: sora['s']!.copyWith(
                   color: Colors.white,
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
               OutlinedButton(
                 key: const Key("singupPageSingupWithGoogleButton"),
                 style: ButtonStyle(
@@ -149,7 +153,7 @@ class _SingupPageState extends State<SingupPage> {
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 40),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

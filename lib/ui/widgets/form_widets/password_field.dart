@@ -41,7 +41,7 @@ class _PasswordFieldState extends State<PasswordField> {
               borderSide: BorderSide.none,
               borderRadius: BorderRadius.circular(10),
             ),
-            suffix: IconButton(
+            suffixIcon: IconButton(
               icon: Icon(
                 _hidePassword ? Icons.visibility : Icons.visibility_off,
                 color: Colors.white,

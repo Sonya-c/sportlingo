@@ -2,7 +2,10 @@
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
+import 'package:sportlingo/ui/controllers/auth_controller.dart';
+import 'package:sportlingo/ui/pages/authentication/login_page.dart';
 import 'package:sportlingo/ui/pages/content/chats/chats_page.dart';
 import 'package:sportlingo/ui/pages/content/home_page.dart';
 import 'package:sportlingo/ui/pages/content/posts/posts_page.dart';
@@ -13,6 +16,7 @@ import 'package:sportlingo/ui/utils/colors.dart';
 class Content extends StatelessWidget with UiLoggy {
   final int initialPage;
   final PageController _pageController;
+  final _authController = Get.find<AuthController>();
 
   Content({Key? key, this.initialPage = 0})
       : _pageController = PageController(initialPage: initialPage),
@@ -20,6 +24,9 @@ class Content extends StatelessWidget with UiLoggy {
 
   @override
   Widget build(BuildContext context) {
+    ever(_authController.logged,
+        (isLogged) => isLogged ? null : Get.to(() => const LoginPage()));
+
     return Scaffold(
       body: PageView(
         controller: _pageController,
