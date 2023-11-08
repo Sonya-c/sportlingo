@@ -13,23 +13,35 @@ import 'package:sportlingo/ui/pages/content/profile/profile_page.dart';
 import 'package:sportlingo/ui/pages/content/run/run_page.dart';
 import 'package:sportlingo/ui/utils/colors.dart';
 
-class Content extends StatelessWidget with UiLoggy {
+class Content extends StatefulWidget with UiLoggy {
   final int initialPage;
   final PageController _pageController;
-  final _authController = Get.find<AuthController>();
 
   Content({Key? key, this.initialPage = 0})
       : _pageController = PageController(initialPage: initialPage),
         super(key: key);
 
   @override
+  State<Content> createState() => _ContentState();
+}
+
+class _ContentState extends State<Content> {
+  final _authController = Get.find<AuthController>();
+  int _pageIndex = 0;
+
+  @override
   Widget build(BuildContext context) {
     ever(_authController.logged,
-        (isLogged) => isLogged ? null : Get.to(() => const LoginPage()));
+        (isLogged) => isLogged ? null : Get.to(() => LoginPage()));
 
     return Scaffold(
       body: PageView(
-        controller: _pageController,
+        controller: widget._pageController,
+        onPageChanged: (value) => {
+          setState(() {
+            _pageIndex = value;
+          })
+        },
         children: const <Widget>[
           HomePage(),
           PostPage(),
@@ -40,22 +52,45 @@ class Content extends StatelessWidget with UiLoggy {
       ),
       extendBody: true,
       bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.white.withOpacity(0.5),
+        backgroundColor: Colors.transparent,
         buttonBackgroundColor: magenta,
-        color: magentaDark,
+        color: Colors.white,
         height: 50,
-        index: initialPage,
-        items: const <Widget>[
-          Icon(Icons.home, size: 30, color: Colors.white),
-          Icon(Icons.language, size: 30, color: Colors.white),
-          Icon(Icons.directions_run, size: 30, color: Colors.white),
-          Icon(Icons.chat, size: 30, color: Colors.white),
-          Icon(Icons.person, size: 30, color: Colors.white),
+        index: _pageIndex,
+        items: [
+          Icon(
+            Icons.home_rounded,
+            size: 30,
+            color: _pageIndex == 0 ? Colors.white : orange,
+          ),
+          Icon(
+            Icons.language_rounded,
+            size: 30,
+            color: _pageIndex == 1 ? Colors.white : orange,
+          ),
+          Icon(
+            Icons.directions_run,
+            size: 30,
+            color: _pageIndex == 2 ? Colors.white : orange,
+          ),
+          Icon(
+            Icons.chat_rounded,
+            size: 30,
+            color: _pageIndex == 3 ? Colors.white : orange,
+          ),
+          Icon(
+            Icons.person,
+            size: 30,
+            color: _pageIndex == 4 ? Colors.white : orange,
+          ),
         ],
         animationDuration: const Duration(milliseconds: 200),
         animationCurve: Curves.bounceInOut,
         onTap: (index) {
-          _pageController.animateToPage(index,
+          setState(() {
+            _pageIndex = index;
+          });
+          widget._pageController.animateToPage(index,
               duration: const Duration(milliseconds: 200),
               curve: Curves.bounceInOut);
         },

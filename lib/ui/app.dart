@@ -13,13 +13,13 @@ class App extends StatelessWidget {
     final _authController = Get.find<AuthController>();
 
     return GetMaterialApp(
-      title: 'Sportlingo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: magenta),
-        useMaterial3: true,
-      ),
-      home: _authController.isLogged ? Content() : const LoginPage(),
-    );
+        title: 'Sportlingo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: magenta),
+          useMaterial3: true,
+        ),
+        // home: _authController.isLogged ? Content() : LoginPage(),
+        home: Content());
   }
 }

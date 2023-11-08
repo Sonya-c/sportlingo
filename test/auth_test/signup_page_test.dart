@@ -11,7 +11,7 @@ void main() {
     testWidgets("Form elements", (WidgetTester tester) async {
       Get.put(AuthController());
 
-      await tester.pumpWidget(const GetMaterialApp(
+      await tester.pumpWidget(GetMaterialApp(
         home: SingupPage(),
       ));
 
@@ -28,7 +28,7 @@ void main() {
         (WidgetTester tester) async {
       Get.put(AuthController());
 
-      await tester.pumpWidget(const GetMaterialApp(
+      await tester.pumpWidget(GetMaterialApp(
         home: SingupPage(),
       ));
 
@@ -44,7 +44,7 @@ void main() {
       (WidgetTester tester) async {
         Get.put(AuthController());
 
-        await tester.pumpWidget(const GetMaterialApp(
+        await tester.pumpWidget(GetMaterialApp(
           home: SingupPage(),
         ));
 
@@ -66,7 +66,7 @@ void main() {
       (WidgetTester tester) async {
         Get.put(AuthController());
 
-        await tester.pumpWidget(const GetMaterialApp(
+        await tester.pumpWidget(GetMaterialApp(
           home: SingupPage(),
         ));
 
@@ -90,7 +90,7 @@ void main() {
       (WidgetTester tester) async {
         Get.put(AuthController());
 
-        await tester.pumpWidget(const GetMaterialApp(
+        await tester.pumpWidget(GetMaterialApp(
           home: SingupPage(),
         ));
 
@@ -115,7 +115,7 @@ void main() {
       (WidgetTester tester) async {
         Get.put(AuthController());
 
-        await tester.pumpWidget(const GetMaterialApp(
+        await tester.pumpWidget(GetMaterialApp(
           home: SingupPage(),
         ));
 

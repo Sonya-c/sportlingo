@@ -11,7 +11,7 @@ void main() {
     testWidgets("Form elements", (WidgetTester tester) async {
       Get.put(AuthController());
 
-      await tester.pumpWidget(const GetMaterialApp(
+      await tester.pumpWidget(GetMaterialApp(
         home: LoginPage(),
       ));
 
@@ -28,7 +28,7 @@ void main() {
         (WidgetTester tester) async {
       Get.put(AuthController());
 
-      await tester.pumpWidget(const GetMaterialApp(
+      await tester.pumpWidget(GetMaterialApp(
         home: LoginPage(),
       ));
       await tester.tap(find.byKey(const Key("loginPageSingupButton")));
@@ -41,7 +41,7 @@ void main() {
       (WidgetTester tester) async {
         Get.put(AuthController());
 
-        await tester.pumpWidget(const GetMaterialApp(
+        await tester.pumpWidget(GetMaterialApp(
           home: LoginPage(),
         ));
 
@@ -63,7 +63,7 @@ void main() {
       (WidgetTester tester) async {
         Get.put(AuthController());
 
-        await tester.pumpWidget(const GetMaterialApp(
+        await tester.pumpWidget(GetMaterialApp(
           home: LoginPage(),
         ));
 
@@ -87,7 +87,7 @@ void main() {
       (WidgetTester tester) async {
         Get.put(AuthController());
 
-        await tester.pumpWidget(const GetMaterialApp(
+        await tester.pumpWidget(GetMaterialApp(
           home: LoginPage(),
         ));
 
@@ -112,7 +112,7 @@ void main() {
       (WidgetTester tester) async {
         Get.put(AuthController());
 
-        await tester.pumpWidget(const GetMaterialApp(
+        await tester.pumpWidget(GetMaterialApp(
           home: LoginPage(),
         ));
 

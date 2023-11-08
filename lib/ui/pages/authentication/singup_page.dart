@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportlingo/ui/controllers/auth_controller.dart';
+import 'package:sportlingo/ui/pages/authentication/login_page.dart';
 import 'package:sportlingo/ui/pages/content/content.dart';
 import 'package:sportlingo/ui/utils/colors.dart';
 import 'package:sportlingo/ui/utils/scroll_layout.dart';
@@ -8,18 +9,17 @@ import 'package:sportlingo/ui/utils/text_styles.dart';
 import 'package:sportlingo/ui/widgets/form_widets/email_field.dart';
 import 'package:sportlingo/ui/widgets/form_widets/password_field.dart';
 
-class SingupPage extends StatefulWidget {
-  const SingupPage({super.key});
+class SingupPage extends StatelessWidget {
+  SingupPage({super.key});
 
-  @override
-  State<SingupPage> createState() => _SingupPageState();
-}
-
-class _SingupPageState extends State<SingupPage> {
   final _authController = Get.find<AuthController>();
+
   final _formKey = GlobalKey<FormState>();
+
   final _nameController = TextEditingController();
+
   final _emailController = TextEditingController();
+
   final _passwordController = TextEditingController();
 
   @override
@@ -166,7 +166,7 @@ class _SingupPageState extends State<SingupPage> {
                   TextButton(
                     key: const Key("singupPageLoginButton"),
                     onPressed: () {
-                      Get.toNamed('/login');
+                      Get.to(() => LoginPage());
                     },
                     child: Text(
                       "Login",

@@ -11,6 +11,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScrollLayout(
       padding: const EdgeInsets.all(10),
+      backgroundColor: Color.fromARGB(255, 236, 236, 236),
       children: [
         Container(
           decoration: BoxDecoration(
