@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
 
 class AuthController extends GetxController with UiLoggy {
-  final logged = false.obs;
+  final logged = true.obs;
 
   bool get isLogged => logged.value;
 

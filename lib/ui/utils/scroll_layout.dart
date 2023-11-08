@@ -4,12 +4,14 @@ class ScrollLayout extends StatelessWidget {
   final List<Widget> children;
   final LinearGradient? backgroundGradient;
   final Color? backgroundColor;
+  final EdgeInsetsGeometry? padding;
 
   const ScrollLayout({
     super.key,
     required this.children,
     this.backgroundGradient,
     this.backgroundColor,
+    this.padding,
   });
 
   @override
@@ -20,6 +22,7 @@ class ScrollLayout extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: backgroundGradient,
         ),
+        padding: padding,
         alignment: Alignment.center,
         child: SingleChildScrollView(
           child: Column(
