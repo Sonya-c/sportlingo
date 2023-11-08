@@ -1,118 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:get/get.dart';
+import 'package:sportlingo/ui/controllers/user_controller.dart';
 import 'package:sportlingo/ui/utils/colors.dart';
 import 'package:sportlingo/ui/utils/scroll_layout.dart';
 import 'package:sportlingo/ui/utils/text_styles.dart';
+import 'package:sportlingo/ui/widgets/daily_objetives.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  final _userController = Get.find<UserController>();
+
+  HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ScrollLayout(
       padding: const EdgeInsets.all(10),
-      backgroundColor: Color.fromARGB(255, 236, 236, 236),
+      backgroundColor: const Color.fromARGB(255, 236, 236, 236),
       children: [
-        Container(
-          decoration: BoxDecoration(
-            gradient: orangeMagentaGradient,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.5),
-                blurRadius: 5,
-                offset: const Offset(0, 3),
-              )
-            ],
-          ),
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Daily Objetives",
-                style: blackOpsOne['l']!.copyWith(color: Colors.white),
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Column(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        child: CircularPercentIndicator(
-                          radius: 40,
-                          lineWidth: 10,
-                          percent: 0.65,
-                          center: const Icon(Icons.directions_run,
-                              color: Colors.white),
-                          progressColor: orange,
-                          backgroundColor: Colors.white.withOpacity(
-                            0.5,
-                          ),
-                          circularStrokeCap: CircularStrokeCap.round,
-                        ),
-                      ),
-                      Text(
-                        "1.3km",
-                        style: sora['n']!.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        "/2km",
-                        style: sora['s']!.copyWith(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        child: CircularPercentIndicator(
-                          radius: 40,
-                          lineWidth: 10,
-                          percent: 0.65,
-                          center: const Icon(Icons.timer, color: Colors.white),
-                          progressColor: orange,
-                          backgroundColor: Colors.white.withOpacity(
-                            0.5,
-                          ),
-                          circularStrokeCap: CircularStrokeCap.round,
-                        ),
-                      ),
-                      Text(
-                        "00:30:00",
-                        style: sora['n']!.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        "00:45:00",
-                        style: sora['s']!.copyWith(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ),
+        DailyObjetives(
+          currentDistance: 1.3,
+          goalDistance: 2,
+          currentTime: const Duration(minutes: 30),
+          goalTime: Duration(minutes: 45),
         ),
         const SizedBox(height: 15),
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: Colors.white,
-            border: Border.all(
-              color: magenta,
-            ),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.5),

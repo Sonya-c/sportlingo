@@ -42,12 +42,12 @@ class _ContentState extends State<Content> {
             _pageIndex = value;
           })
         },
-        children: const <Widget>[
+        children: <Widget>[
           HomePage(),
-          PostPage(),
-          RunPage(),
-          ChatsPage(),
-          ProfilePage(),
+          const PostPage(),
+          const RunPage(),
+          const ChatsPage(),
+          const ProfilePage(),
         ],
       ),
       extendBody: true,
