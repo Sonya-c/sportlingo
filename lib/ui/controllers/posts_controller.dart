@@ -8,9 +8,9 @@ class PostsController extends GetxController with UiLoggy {
 
   final RxList posts = [
     {
+      "postid": 1,
       "username": "user0",
       "handle": "handle0",
-      "title": "Lorem ipsum dolor sit amet",
       "body":
           "Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla facilisi etiam di",
       "date": "12, Ago",
@@ -18,9 +18,9 @@ class PostsController extends GetxController with UiLoggy {
       "upvote": true,
     },
     {
+      "postid": 2,
       "username": "user1",
       "handle": "handle1",
-      "title": "Consectetur adipiscing elit",
       "body":
           "di amet facilisis magna etiam tempor orci eu lobortis. Nunc sed id semper risus in hendrerit gravida rutrum quisque non. ",
       "date": "12, Ago",
@@ -28,18 +28,18 @@ class PostsController extends GetxController with UiLoggy {
       "upvote": false,
     },
     {
+      "postid": 3,
       "username": "user2",
       "handle": "handle2",
-      "title": "Sed do eiusmod tempor incididunt",
-      "body": null,
+      "body": "Sed do eiusmod tempor incididunt",
       "date": "12, Ago",
       "rating": 12,
       "upvote": true,
     },
     {
+      "postid": 4,
       "username": "user2",
       "handle": "handle2",
-      "title": "ut labore et dolore magna aliqua",
       "body":
           "non quam lacus suspendisse faucibus interdum posuere lorem ipsum dolor.",
       "date": "12, Ago",
@@ -47,9 +47,9 @@ class PostsController extends GetxController with UiLoggy {
       "upvote": true,
     },
     {
+      "postid": 5,
       "username": "user2",
       "handle": "handle2",
-      "title": "Ut enim ad minim veniam",
       "body":
           "ipsum dolor. Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla facilisi etiam di.",
       "date": "12, Ago",
@@ -57,18 +57,18 @@ class PostsController extends GetxController with UiLoggy {
       "upvote": true,
     },
     {
+      "postid": 6,
       "username": "user2",
       "handle": "handle2",
-      "title": "quis nostrud exercitation ullamco",
-      "body": null,
+      "body": "quis nostrud exercitation ullamco",
       "date": "12, Ago",
       "rating": 12,
       "upvote": true,
     },
     {
+      "postid": 7,
       "username": "user2",
       "handle": "handle2",
-      "title": "laboris nisi ut aliquip ex ea commodo",
       "body":
           "di. Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla facilisi etiam di.",
       "date": "12, Ago",

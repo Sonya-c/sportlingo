@@ -4,7 +4,6 @@ import 'package:sportlingo/ui/utils/text_styles.dart';
 class PostCard extends StatelessWidget {
   final String username;
   final String handle;
-  final String title;
   final String? body;
   final String date;
   final int rating;
@@ -14,8 +13,7 @@ class PostCard extends StatelessWidget {
     super.key,
     required this.username,
     required this.handle,
-    required this.title,
-    this.body,
+    required this.body,
     required this.date,
     required this.rating,
     required this.upvote,
@@ -59,10 +57,6 @@ class PostCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Text(
-                title,
-                style: sora['m']!.copyWith(fontWeight: FontWeight.bold),
-              ),
               body == null
                   ? const SizedBox()
                   : Text(

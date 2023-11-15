@@ -34,61 +34,63 @@ class _ContentState extends State<Content> {
     ever(_authController.logged,
         (isLogged) => isLogged ? null : Get.to(() => LoginPage()));
 
-    return Scaffold(
-      body: PageView(
-        controller: widget._pageController,
-        onPageChanged: (value) => {
-          setState(() {
-            _pageIndex = value;
-          })
-        },
-        children: <Widget>[
-          HomePage(),
-          FeedPage(),
-          const RunPage(),
-          const ChatsPage(),
-          const ProfilePage(),
-        ],
-      ),
-      extendBody: true,
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.transparent,
-        buttonBackgroundColor: magenta,
-        color: const Color(0xFF111111),
-        height: 50,
-        index: _pageIndex,
-        items: [
-          Icon(
-            Icons.home_rounded,
-            color: _pageIndex == 0 ? Colors.white : Colors.grey[500],
-          ),
-          Icon(
-            Icons.language_rounded,
-            color: _pageIndex == 1 ? Colors.white : Colors.grey[500],
-          ),
-          Icon(
-            Icons.directions_run,
-            color: _pageIndex == 2 ? Colors.white : Colors.grey[500],
-          ),
-          Icon(
-            Icons.chat_rounded,
-            color: _pageIndex == 3 ? Colors.white : Colors.grey[500],
-          ),
-          Icon(
-            Icons.person,
-            color: _pageIndex == 4 ? Colors.white : Colors.grey[500],
-          ),
-        ],
-        animationDuration: const Duration(milliseconds: 200),
-        animationCurve: Curves.bounceInOut,
-        onTap: (index) {
-          setState(() {
-            _pageIndex = index;
-          });
-          widget._pageController.animateToPage(index,
-              duration: const Duration(milliseconds: 200),
-              curve: Curves.bounceInOut);
-        },
+    return SafeArea(
+      child: Scaffold(
+        body: PageView(
+          controller: widget._pageController,
+          onPageChanged: (value) => {
+            setState(() {
+              _pageIndex = value;
+            })
+          },
+          children: <Widget>[
+            HomePage(),
+            FeedPage(),
+            const RunPage(),
+            const ChatsPage(),
+            const ProfilePage(),
+          ],
+        ),
+        extendBody: true,
+        bottomNavigationBar: CurvedNavigationBar(
+          backgroundColor: Colors.transparent,
+          buttonBackgroundColor: magenta,
+          color: const Color(0xFF111111),
+          height: 50,
+          index: _pageIndex,
+          items: [
+            Icon(
+              Icons.home_rounded,
+              color: _pageIndex == 0 ? Colors.white : Colors.grey[500],
+            ),
+            Icon(
+              Icons.language_rounded,
+              color: _pageIndex == 1 ? Colors.white : Colors.grey[500],
+            ),
+            Icon(
+              Icons.directions_run,
+              color: _pageIndex == 2 ? Colors.white : Colors.grey[500],
+            ),
+            Icon(
+              Icons.chat_rounded,
+              color: _pageIndex == 3 ? Colors.white : Colors.grey[500],
+            ),
+            Icon(
+              Icons.person,
+              color: _pageIndex == 4 ? Colors.white : Colors.grey[500],
+            ),
+          ],
+          animationDuration: const Duration(milliseconds: 200),
+          animationCurve: Curves.bounceInOut,
+          onTap: (index) {
+            setState(() {
+              _pageIndex = index;
+            });
+            widget._pageController.animateToPage(index,
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.bounceInOut);
+          },
+        ),
       ),
     );
   }

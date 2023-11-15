@@ -13,17 +13,17 @@ class FeedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => ScrollLayout(
-        backgroundColor: Color.fromARGB(255, 236, 236, 236),
+        backgroundColor: const Color.fromARGB(255, 236, 236, 236),
         children: [
           ListView.builder(
             shrinkWrap: true,
+            physics: const ScrollPhysics(),
             itemCount: _postController.currentPosts.length,
             padding: const EdgeInsets.all(10),
             itemBuilder: (context, index) {
               return PostCard(
                 username: _postController.currentPosts[index]["username"],
                 handle: _postController.currentPosts[index]["handle"],
-                title: _postController.currentPosts[index]["title"],
                 body: _postController.currentPosts[index]["body"],
                 date: _postController.currentPosts[index]["date"],
                 rating: _postController.currentPosts[index]["rating"],

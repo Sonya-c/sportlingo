@@ -27,161 +27,165 @@ class SingupPage extends StatelessWidget {
     ever(_authController.logged,
         (isLogged) => isLogged ? Get.to(() => Content()) : null);
 
-    return ScrollLayout(
-      key: const Key("singupPage"),
-      backgroundGradient: orangeMagentaGradient,
-      children: [
-        Form(
-          key: _formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text(
-                "Sign Up",
-                style: fasterOne['5xl']?.copyWith(
-                  color: Colors.white,
-                  height: 3,
+    return Scaffold(
+      body: ScrollLayout(
+        key: const Key("singupPage"),
+        backgroundGradient: orangeMagentaGradient,
+        children: [
+          Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  "Sign Up",
+                  style: fasterOne['5xl']?.copyWith(
+                    color: Colors.white,
+                    height: 3,
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Name",
-                            style: sora['s']?.copyWith(color: Colors.white)),
-                        const SizedBox(height: 10),
-                        TextFormField(
-                          controller: _nameController,
-                          style: sora['s']?.copyWith(color: Colors.white),
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: const Color.fromARGB(50, 255, 255, 255),
-                            prefixIcon: const Icon(
-                              Icons.person,
-                              color: Colors.white,
-                              size: 15,
-                            ),
-                            border: UnderlineInputBorder(
-                              borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.circular(10),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Name",
+                              style: sora['s']?.copyWith(color: Colors.white)),
+                          const SizedBox(height: 10),
+                          TextFormField(
+                            controller: _nameController,
+                            style: sora['s']?.copyWith(color: Colors.white),
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor:
+                                  const Color.fromARGB(50, 255, 255, 255),
+                              prefixIcon: const Icon(
+                                Icons.person,
+                                color: Colors.white,
+                                size: 15,
+                              ),
+                              border: UnderlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    EmailField(
-                      key: const Key("singupPageEmailField"),
-                      emailController: _emailController,
-                    ),
-                    const SizedBox(height: 20),
-                    PasswordField(
-                      key: const Key("singupPagePasswordField"),
-                      passwordController: _passwordController,
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 40),
-              FilledButton(
-                key: const Key("singupPageSingupButton"),
-                style: ButtonStyle(
-                  backgroundColor: const MaterialStatePropertyAll(Colors.white),
-                  shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      EmailField(
+                        key: const Key("singupPageEmailField"),
+                        emailController: _emailController,
+                      ),
+                      const SizedBox(height: 20),
+                      PasswordField(
+                        key: const Key("singupPagePasswordField"),
+                        passwordController: _passwordController,
+                      ),
+                    ],
                   ),
                 ),
-                onPressed: () async {
-                  FocusScope.of(context).requestFocus(FocusNode());
-                  final form = _formKey.currentState;
+                const SizedBox(height: 40),
+                FilledButton(
+                  key: const Key("singupPageSingupButton"),
+                  style: ButtonStyle(
+                    backgroundColor:
+                        const MaterialStatePropertyAll(Colors.white),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                  onPressed: () async {
+                    FocusScope.of(context).requestFocus(FocusNode());
+                    final form = _formKey.currentState;
 
-                  form!.save();
+                    form!.save();
 
-                  if (form.validate()) {
-                    await _authController.singUp(
-                      _nameController.text,
-                      _emailController.text,
-                      _passwordController.text,
-                    );
-                  }
-                },
-                child: Text(
-                  "Signup",
-                  style: sora['n']!.copyWith(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                "Or sign up with",
-                style: sora['s']!.copyWith(
-                  color: Colors.white,
-                ),
-              ),
-              const SizedBox(height: 20),
-              OutlinedButton(
-                key: const Key("singupPageSingupWithGoogleButton"),
-                style: ButtonStyle(
-                  side: MaterialStateProperty.all(
-                    const BorderSide(
-                      color: Colors.white,
-                      width: 1,
-                      style: BorderStyle.solid,
-                    ),
-                  ),
-                  shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                    if (form.validate()) {
+                      await _authController.singUp(
+                        _nameController.text,
+                        _emailController.text,
+                        _passwordController.text,
+                      );
+                    }
+                  },
+                  child: Text(
+                    "Signup",
+                    style: sora['n']!.copyWith(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-                onPressed: () async {
-                  await _authController.singUpWithGoogle();
-                },
-                child: Text(
-                  "Google",
-                  style: sora['n']!.copyWith(
+                const SizedBox(height: 20),
+                Text(
+                  "Or sign up with",
+                  style: sora['s']!.copyWith(
                     color: Colors.white,
                   ),
                 ),
-              ),
-              const SizedBox(height: 40),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Already have an account?",
-                    style: sora['s']!.copyWith(
+                const SizedBox(height: 20),
+                OutlinedButton(
+                  key: const Key("singupPageSingupWithGoogleButton"),
+                  style: ButtonStyle(
+                    side: MaterialStateProperty.all(
+                      const BorderSide(
+                        color: Colors.white,
+                        width: 1,
+                        style: BorderStyle.solid,
+                      ),
+                    ),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                  onPressed: () async {
+                    await _authController.singUpWithGoogle();
+                  },
+                  child: Text(
+                    "Google",
+                    style: sora['n']!.copyWith(
                       color: Colors.white,
                     ),
                   ),
-                  TextButton(
-                    key: const Key("singupPageLoginButton"),
-                    onPressed: () {
-                      Get.to(() => LoginPage());
-                    },
-                    child: Text(
-                      "Login",
+                ),
+                const SizedBox(height: 40),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Already have an account?",
                       style: sora['s']!.copyWith(
                         color: Colors.white,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  )
-                ],
-              )
-            ],
+                    TextButton(
+                      key: const Key("singupPageLoginButton"),
+                      onPressed: () {
+                        Get.to(() => LoginPage());
+                      },
+                      child: Text(
+                        "Login",
+                        style: sora['s']!.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

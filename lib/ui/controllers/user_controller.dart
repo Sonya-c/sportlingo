@@ -6,6 +6,9 @@ class UserController extends GetxController with UiLoggy {
     loggy.info("Getting a user...");
   }
 
+  final userid = 1.obs;
+  final email = "".obs;
+  final userName = "".obs;
   final RxDouble distance = 2.0.obs;
   final RxDouble goalDistance = 2.0.obs;
   final Rx<Duration> time = const Duration(minutes: 25).obs;
@@ -49,4 +52,8 @@ class UserController extends GetxController with UiLoggy {
     this.goalTime.value = goalTime;
     // return: current goal distance, current goal time
   }
+
+  changePreference() {}
+
+  changeInfo() {}
 }

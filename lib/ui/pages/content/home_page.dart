@@ -15,6 +15,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => ScrollLayout(
+        alignment: Alignment.topCenter,
         backgroundColor: const Color.fromARGB(255, 236, 236, 236),
         children: [
           DailyObjetives(
