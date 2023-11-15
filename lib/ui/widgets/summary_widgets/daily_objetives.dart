@@ -21,15 +21,16 @@ class DailyObjetives extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         gradient: orangeMagentaGradient,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(5),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.5),
+            color: Colors.black.withOpacity(0.2),
             blurRadius: 5,
             offset: const Offset(0, 3),
           )
         ],
       ),
+      margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
