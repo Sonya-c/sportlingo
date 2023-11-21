@@ -19,6 +19,7 @@ class ScrollLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+        color: backgroundColor,
         gradient: backgroundGradient,
       ),
       padding: padding,

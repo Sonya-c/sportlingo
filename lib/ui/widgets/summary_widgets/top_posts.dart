@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sportlingo/ui/utils/text_styles.dart';
+import 'package:sportlingo/ui/widgets/posts_widgets/post_preview.dart';
 
 class TopPosts extends StatelessWidget {
   const TopPosts({super.key});
@@ -27,28 +28,9 @@ class TopPosts extends StatelessWidget {
             "Top Post",
             style: blackOpsOne['l'],
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    "Name Lastname",
-                    style: sora['n']!.copyWith(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    "@handle",
-                    style: sora['s'],
-                  ),
-                ],
-              ),
-              const Text(
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ut euismod tellus. Suspendisse potenti",
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              )
-            ],
-          ),
+          const PostPreview(),
+          const PostPreview(),
+          const PostPreview(),
         ],
       ),
     );

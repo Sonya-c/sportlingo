@@ -12,7 +12,7 @@ class PostsController extends GetxController with UiLoggy {
       "username": "user0",
       "handle": "handle0",
       "body":
-          "Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla facilisi etiam di",
+          "Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla facilisi etiam di. Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla facilisi etiam di. Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla facilisi etiam di",
       "date": "12, Ago",
       "rating": 12,
       "upvote": true,

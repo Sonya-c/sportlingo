@@ -24,8 +24,15 @@ class SingupPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ever(_authController.logged,
-        (isLogged) => isLogged ? Get.to(() => Content()) : null);
+    ever(
+        _authController.logged,
+        (isLogged) => isLogged
+            ? Get.to(
+                () => Content(),
+                transition: Transition.circularReveal,
+                duration: const Duration(seconds: 3),
+              )
+            : null);
 
     return Scaffold(
       body: ScrollLayout(
@@ -169,7 +176,9 @@ class SingupPage extends StatelessWidget {
                     TextButton(
                       key: const Key("singupPageLoginButton"),
                       onPressed: () {
-                        Get.to(() => LoginPage());
+                        Get.to(() => LoginPage(),
+                            transition: Transition.cupertino,
+                            duration: const Duration(seconds: 1));
                       },
                       child: Text(
                         "Login",

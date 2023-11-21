@@ -18,6 +18,7 @@ void main() {
 
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Add the controllers
   Get.put(AuthController());
   Get.put(UserController());
   Get.put(UsersController());
@@ -25,5 +26,5 @@ void main() {
   Get.put(ChatController());
   Get.put(ActivityController());
 
-  runApp(const App());
+  runApp(App());
 }
