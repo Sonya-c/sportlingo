@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportlingo/ui/pages/content/posts/post_page.dart';
+import 'package:sportlingo/ui/pages/content/profile/user_page.dart';
 import 'package:sportlingo/ui/widgets/posts_widgets/post_header.dart';
 
 class PostCard extends StatelessWidget {
@@ -87,7 +88,7 @@ class PostCard extends StatelessWidget {
                   date: date,
                 ),
                 onTap: () {
-                  Get.to(() => PostPage());
+                  Get.to(() => UserPage());
                 },
               ),
               InkWell(

@@ -67,7 +67,7 @@ class ChatsPage extends StatelessWidget {
                 icon: const Icon(
                   Icons.add_circle_outline_rounded,
                   size: 30,
-                  color: orange,
+                  color: magenta,
                 )),
           ],
         )
