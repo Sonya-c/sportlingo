@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sportlingo/ui/pages/content/chats/chat_page.dart';
 import 'package:sportlingo/ui/utils/colors.dart';
 import 'package:sportlingo/ui/utils/scroll_layout.dart';
 
@@ -40,7 +42,9 @@ class ChatsPage extends StatelessWidget {
           itemCount: chats.length,
           itemBuilder: (context, index) {
             return InkWell(
-              onTap: () {},
+              onTap: () {
+                Get.to(() => const ChatPage());
+              },
               child: Container(
                 color: Colors.white,
                 padding: const EdgeInsets.all(10),
