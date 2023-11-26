@@ -13,12 +13,10 @@ class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 
   final _authController = Get.find<AuthController>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
-
-  final _emailController = TextEditingController();
-
-  final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

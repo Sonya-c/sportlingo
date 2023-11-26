@@ -19,7 +19,8 @@ class App extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: magenta),
         useMaterial3: true,
       ),
-      home: _authController.isLogged ? Content() : LoginPage(),
+      // home: _authController.isLogged ? Content() : LoginPage(),
+      home: Content(),
     );
   }
 }
