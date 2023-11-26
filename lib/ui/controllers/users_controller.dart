@@ -1,44 +1,29 @@
 import 'package:get/get.dart';
-import 'package:loggy/loggy.dart';
+import '../../data/model/user.dart';
+import 'package:firebase_database/firebase_database.dart';
 
-class UsersController extends GetxController with UiLoggy {
-  setUser() {
-    loggy.info("Getting a user...");
+class UsersController extends GetxController {
+  var _users = <User>[].obs; 
+  final databaseRef = FirebaseDatabase.instance.ref();
+
+  List<User> get users => _users.toList();
+
+  @override
+  void onInit() {
+    super.onInit();
+    _loadUsers();
   }
 
-  getUserById() {
-    return {
-      "userId": 1,
-      "username": 2,
-      "activities": [
-        {
-          "distance": 0.1,
-          "time": const Duration(minutes: 5),
-        },
-        {
-          "distance": 0.2,
-          "time": const Duration(minutes: 10),
-        },
-        {
-          "distance": 1.0,
-          "time": const Duration(minutes: 10),
-        },
-      ],
-      "posts": [
-        {
-          "postid": 1,
-          "username": "user0",
-          "handle": "handle0",
-          "title": "Lorem ipsum dolor sit amet",
-          "body":
-              "Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla facilisi etiam di",
-          "date": "12, Ago",
-          "rating": 12,
-          "upvote": true,
-        },
-      ]
-    };
+  void _loadUsers() {
+    databaseRef.child("users").onChildAdded.listen((DatabaseEvent event) {
+      final json = event.snapshot.value as Map<dynamic, dynamic>;
+      _users.add(User.fromJson(event.snapshot, json));
+    });
   }
 
-  blockUserById() {}
+  User? getUserById(String userId) {
+    return _users.firstWhereOrNull((user) => user.uid == userId);
+  }
+
 }
+

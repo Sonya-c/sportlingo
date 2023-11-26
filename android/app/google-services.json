@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "1002776845743",
+    "project_id": "sportlingo-a93f2",
+    "storage_bucket": "sportlingo-a93f2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1002776845743:android:f56f1a358b76a72be6635a",
+        "android_client_info": {
+          "package_name": "com.example.sportlingo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1002776845743-g58ukattjsn20qgjjijkque27t1ont6k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sportlingo",
+            "certificate_hash": "fe22723a8de373326ca8aa33a20bb0d00e2070aa"
+          }
+        },
+        {
+          "client_id": "1002776845743-r54d1colk73aj36dpkdn5qgfrl3tb783.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6rfSgC-0VRgmZK41C7XjFctgVisArjOU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1002776845743-r54d1colk73aj36dpkdn5qgfrl3tb783.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1002776845743-qhm2qql6g7j8la47lcicb47pkrqrm9lf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.sportlingo.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -107,8 +107,9 @@ class SingupPage extends StatelessWidget {
                     form!.save();
 
                     if (form.validate()) {
-                      await _authController.singUp(
+                      await _authController.signup(
                         _nameController.text,
+                        "defaultUser",
                         _emailController.text,
                         _passwordController.text,
                       );
@@ -147,7 +148,7 @@ class SingupPage extends StatelessWidget {
                     ),
                   ),
                   onPressed: () async {
-                    await _authController.singUpWithGoogle();
+                    await _authController.signInWithGoogle();
                   },
                   child: Text(
                     "Google",

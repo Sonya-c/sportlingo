@@ -1,59 +1,107 @@
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
+import 'package:firebase_database/firebase_database.dart';
+import '../../data/model/user.dart';
+import 'package:sportlingo/ui/controllers/auth_controller.dart';
 
 class UserController extends GetxController with UiLoggy {
-  setUser() {
-    loggy.info("Getting a user...");
-  }
+  final databaseRef = FirebaseDatabase.instance.ref();
+  final AuthController authController = Get.find();
 
-  final userid = 1.obs;
-  final email = "".obs;
-  final userName = "".obs;
-  final RxDouble distance = 2.0.obs;
-  final RxDouble goalDistance = 2.0.obs;
-  final Rx<Duration> time = const Duration(minutes: 25).obs;
-  final Rx<Duration> goalTime = const Duration(minutes: 25).obs;
-  final RxList activities = [
-    {
-      "distance": 0.1,
-      "time": const Duration(minutes: 5),
-    },
-    {
-      "distance": 0.2,
-      "time": const Duration(minutes: 10),
-    },
-    {
-      "distance": 1.0,
-      "time": const Duration(minutes: 10),
-    },
-  ].obs;
+  // Observable properties
+  final Rx<User> _currentUser = User(
+    key: '',
+    name: '',
+    username: '',
+    email: '',
+    uid: '',
+    timeGoal: 0,
+    distanceGoal: 0,
+    activities: [],
+    chats: [],
+  ).obs;
 
-  double get currentDistance => distance.value;
-  double get currentGoalDistance => goalDistance.value;
-  Duration get currentTime => time.value;
-  Duration get currentGoalTime => goalTime.value;
-  List get currentActivities => activities;
+  User get currentUser => _currentUser.value;
 
   UserController() {
-    // get current distance from use case
-    // get current time from use case
+    _loadCurrentUser();
   }
 
-  registerActivity(double distance, Duration time) {
-    // call use case
-    this.distance.value += distance;
-    this.time.value += time;
-    // return: current distance, current time
+  void _loadCurrentUser() {
+    String uid = authController.getUid();
+    if (uid.isNotEmpty) {
+      databaseRef.child("users").child(uid).onValue.listen((DatabaseEvent event) {
+        final json = event.snapshot.value as Map<dynamic, dynamic>?;
+        if (json != null) {
+          _currentUser.value = User.fromJson(event.snapshot, json);
+        }
+      });
+    }
   }
 
-  changeGoals(double goalDistance, Duration goalTime) {
-    // call use case
-    this.goalDistance.value = goalDistance;
-    this.goalTime.value = goalTime;
-    // return: current goal distance, current goal time
+  double get currentDistance => _currentUser.value.distanceGoal.toDouble();
+  double get currentGoalDistance => _currentUser.value.distanceGoal.toDouble();
+  Duration get currentTime => Duration(minutes: _currentUser.value.timeGoal);
+  Duration get currentGoalTime => Duration(minutes: _currentUser.value.timeGoal);
+  List<Activity> get currentActivities => _currentUser.value.activities;
+
+  void registerActivity(double distance, Duration time) {
+    // Update local state
+    DateTime currentDate = DateTime.now(); // Get the current date
+    _currentUser.update((user) {
+      user?.activities.add(Activity(distance: distance, time: time, date: currentDate));
+    });
+
+    // Update Firebase
+    _updateUserActivities();
   }
 
-  changePreference() {}
+  void changeGoals(double goalDistance, Duration goalTime) {
+    // Update local state
+    _currentUser.update((user) {
+      user?.distanceGoal = goalDistance.toInt();
+      user?.timeGoal = goalTime.inMinutes;
+    });
 
-  changeInfo() {}
+    // Update Firebase
+    _updateUserGoals();
+  }
+
+  Future<void> createUser(String name, String username, String email, String uid) async {
+    try {
+      User newUser = User(
+        name: name,
+        username: username,
+        email: email,
+        uid: uid,
+        timeGoal: 0, 
+        distanceGoal: 0, 
+        activities: [], 
+        chats: [], 
+      );
+
+      await databaseRef.child('users').child(uid).set(newUser.toJson());
+      _currentUser.value = newUser;
+    } catch (error) {
+      logError("Error creating user: $error");
+      return Future.error("Error creating user: $error");
+    }
+  }
+
+  void _updateUserActivities() {
+    // Convert activities to a format suitable for Firebase
+    List<Map<String, dynamic>> activitiesData = _currentUser.value.activities.map((activity) {
+      return activity.toJson();
+    }).toList().cast<Map<String, dynamic>>();
+
+
+    databaseRef.child("users").child(_currentUser.value.uid).child("activities").set(activitiesData);
+  }
+
+  void _updateUserGoals() {
+    databaseRef.child("users").child(_currentUser.value.uid).update({
+      "distanceGoal": _currentUser.value.distanceGoal,
+      "timeGoal": _currentUser.value.timeGoal,
+    });
+  }
 }
