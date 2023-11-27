@@ -31,8 +31,12 @@ class User {
         uid = json['uid'] ?? "uid",
         timeGoal = json['timeGoal'] ?? 0,
         distanceGoal = json['distanceGoal'] ?? 0,
-        activities = (json['activities'] as List).map((item) => Activity.fromJson(item)).toList(),
-        chats = List<String>.from(json['chats'] ?? []);
+        activities = json['activities'] != null 
+                    ? (json['activities'] as List).map((item) => Activity.fromJson(item)).toList()
+                    : [], // Provide an empty list if null
+        chats = json['chats'] != null 
+                ? List<String>.from(json['chats'])
+                : []; // Provide an empty list if null
 
   toJson() {
     return {
@@ -57,14 +61,15 @@ class Activity {
 
   Activity.fromJson(Map<dynamic, dynamic> json)
       : date = DateTime.parse(json['date']),
-        time = json['time'] ?? 0,
-        distance = json['distance'] ?? 0;
+        time = Duration(minutes: json['time'] ?? 0),
+        distance = json['distance'] ?? 0.0;
 
   Map<String, dynamic> toJson() {
     return {
       "date": date.toIso8601String(),
-      "time": time,
+      "time": time.inMinutes,
       "distance": distance,
     };
   }
 }
+

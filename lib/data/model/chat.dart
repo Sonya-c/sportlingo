@@ -14,7 +14,9 @@ class Chat {
   Chat.fromJson(DataSnapshot snapshot, Map<dynamic, dynamic> json)
       : key = snapshot.key ?? "0",
         people = List<String>.from(json['people'] ?? []),
-        messages = (json['messages'] as List).map((item) => Message.fromJson(item)).toList();
+        messages = json['messages'] != null 
+                  ? (json['messages'] as List).map((item) => Message.fromJson(item)).toList()
+                  : []; // Provide an empty list if null
 
   toJson() {
     return {
@@ -32,9 +34,10 @@ class Message {
   Message({required this.date, required this.from, required this.content});
 
   Message.fromJson(Map<dynamic, dynamic> json)
-      : date = DateTime.parse(json['date']),
+      : date = json['date'] != null ? DateTime.parse(json['date']) : DateTime.now(), // Provide current date if null
         from = json['from'] ?? "from",
         content = json['content'] ?? "content";
+
 
   Map<String, dynamic> toJson() {
     return {

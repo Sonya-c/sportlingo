@@ -109,7 +109,7 @@ class SingupPage extends StatelessWidget {
                     if (form.validate()) {
                       await _authController.signup(
                         _nameController.text,
-                        "defaultUser",
+                        "defaultuser",
                         _emailController.text,
                         _passwordController.text,
                       );
