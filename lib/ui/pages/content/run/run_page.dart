@@ -17,7 +17,7 @@ class RunPage extends StatelessWidget {
     return Obx(
       () => ScrollLayout(
         backgroundGradient: amberOrangeGradient,
-        children: _activityController.status.value == ActivityStatus.nonstarted
+        children: _activityController.currentStatus == ActivityStatus.nonstarted
             ? [
                 Text(
                   "Let's run!",
@@ -41,7 +41,7 @@ class RunPage extends StatelessWidget {
                   ),
                 ),
               ]
-            : _activityController.status.value == ActivityStatus.finished
+            : _activityController.currentStatus == ActivityStatus.finished
                 ? [
                     Text(
                       "Well done!",
@@ -71,7 +71,8 @@ class RunPage extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  "${_activityController.currentDistance}",
+                                  _activityController.currentDistance
+                                      .toStringAsFixed(2),
                                   style: blackOpsOne['xl'],
                                 ),
                                 const Text("km"),
@@ -128,7 +129,7 @@ class RunPage extends StatelessWidget {
                   ]
                 : [
                     Text(
-                      "${_activityController.currentDistance}",
+                      _activityController.currentDistance.toStringAsFixed(2),
                       style: blackOpsOne['5xl'],
                     ),
                     Text(
@@ -143,7 +144,7 @@ class RunPage extends StatelessWidget {
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                            if (_activityController.status.value ==
+                            if (_activityController.currentStatus ==
                                 ActivityStatus.paused) {
                               _activityController.resumeActivity();
                             } else {
@@ -156,7 +157,7 @@ class RunPage extends StatelessWidget {
                             backgroundColor: Colors.black,
                           ),
                           child: Icon(
-                            _activityController.status.value ==
+                            _activityController.currentStatus ==
                                     ActivityStatus.paused
                                 ? Icons.play_arrow
                                 : Icons.pause,

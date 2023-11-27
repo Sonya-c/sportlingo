@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
+import 'package:sportlingo/domain/use_case/locator_service.dart';
 import 'package:sportlingo/ui/app.dart';
 import 'package:sportlingo/ui/controllers/activity_controller.dart';
 import 'package:sportlingo/ui/controllers/auth_controller.dart';
@@ -17,6 +18,9 @@ void main() {
   );
 
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Add the services
+  Get.put(LocatorService());
 
   // Add the controllers
   Get.put(AuthController());
