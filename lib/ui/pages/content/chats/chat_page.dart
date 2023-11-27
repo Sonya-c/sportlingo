@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:loggy/loggy.dart';
 import 'package:sportlingo/data/model/chat.dart';
 import 'package:sportlingo/ui/controllers/chat_controller.dart';
 import 'package:sportlingo/ui/controllers/user_controller.dart';
@@ -23,56 +24,42 @@ class _ChatPageState extends State<ChatPage> {
   final usersController = Get.find<UsersController>();
 
   final dateFormat = DateFormat('yyyy-MM-dd hh:mm');
-  final TextEditingController _textEditingController = TextEditingController();
+  final _textEditingController = TextEditingController();
   final fromKey = GlobalKey<FormState>();
 
   @override
-  void initState() {
-    super.initState();
-    // Subscribe to chat updates
-    chatController.getChatHistory(widget.chat.key!);
-  }
-
-  @override
-  void dispose() {
-    // Unsubscribe from chat updates
-    chatController.cancelChatSubscription(widget.chat.key!);
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => SafeArea(
-        child: Scaffold(
-          appBar: AppBar(
-            title: Row(
-              children: [
-                const CircleAvatar(),
-                const SizedBox(width: 10),
-                Text(
-                  usersController
-                      .getUserById(widget.chat.people[0] ==
-                              userController.currentUser.uid
-                          ? widget.chat.people[1]
-                          : widget.chat.people[0])!
-                      .name,
-                ),
-              ],
-            ),
-          ),
-          body: ScrollLayout(
-            alignment: Alignment.bottomCenter,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Row(
             children: [
-              ListView.builder(
+              const CircleAvatar(),
+              const SizedBox(width: 10),
+              Text(
+                usersController
+                    .getUserById(
+                        widget.chat.people[0] == userController.currentUser.uid
+                            ? widget.chat.people[1]
+                            : widget.chat.people[0])!
+                    .name,
+              ),
+            ],
+          ),
+        ),
+        body: ScrollLayout(
+          alignment: Alignment.bottomCenter,
+          children: [
+            GetX<ChatController>(
+              builder: (controller) => ListView.builder(
                 shrinkWrap: true,
                 physics: const ScrollPhysics(),
-                itemCount: chatController.chats
+                itemCount: controller.chats
                     .firstWhere((chat) => chat.key == widget.chat.key)
                     .messages
                     .length,
                 itemBuilder: (context, index) {
-                  var message = chatController.chats
+                  var message = controller.chats
                       .firstWhere((chat) => chat.key == widget.chat.key)
                       .messages[index];
 
@@ -80,59 +67,57 @@ class _ChatPageState extends State<ChatPage> {
                     padding: const EdgeInsets.all(10),
                     margin: const EdgeInsets.all(10),
                     child: PostComment(
-                      username: usersController
-                          .getUserById(message.from)!
-                          .name,
+                      username: usersController.getUserById(message.from)!.name,
                       date: dateFormat.format(message.date),
                       content: message.content,
                     ),
                   );
                 },
               ),
-            ],
-          ),
-          bottomSheet: Container(
-            padding: const EdgeInsets.all(10),
-            child: Form(
-              key: fromKey,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      controller: _textEditingController,
-                      decoration: const InputDecoration(
-                        hintText: "Type a message",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
+            ),
+          ],
+        ),
+        bottomSheet: Container(
+          padding: const EdgeInsets.all(10),
+          child: Form(
+            key: fromKey,
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    controller: _textEditingController,
+                    decoration: const InputDecoration(
+                      hintText: "Type a message",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter a message';
-                        }
-                        return null;
-                      },
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  IconButton(
-                    onPressed: () {
-                      if (fromKey.currentState!.validate()) {
-                        chatController.sendMessage(
-                          widget.chat.key,
-                          Message(
-                            from: userController.currentUser.uid,
-                            content: _textEditingController.text,
-                            date: DateTime.now(),
-                          ),
-                        );
-                        _textEditingController.clear();
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter a message';
                       }
+                      return null;
                     },
-                    icon: const Icon(Icons.send),
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(width: 10),
+                IconButton(
+                  onPressed: () {
+                    if (fromKey.currentState!.validate()) {
+                      chatController.sendMessage(
+                        widget.chat.key,
+                        Message(
+                          from: userController.currentUser.uid,
+                          content: _textEditingController.text,
+                          date: DateTime.now(),
+                        ),
+                      );
+                      _textEditingController.clear();
+                    }
+                  },
+                  icon: const Icon(Icons.send),
+                ),
+              ],
             ),
           ),
         ),

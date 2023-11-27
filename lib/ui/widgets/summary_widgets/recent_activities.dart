@@ -69,6 +69,7 @@ class RecentActivities extends StatelessWidget {
                 )
               : ListView.builder(
                   shrinkWrap: true,
+                  physics: const ScrollPhysics(),
                   itemCount: activities.length,
                   padding: const EdgeInsets.all(10),
                   itemBuilder: (context, index) {

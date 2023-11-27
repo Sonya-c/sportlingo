@@ -57,14 +57,14 @@ class RunPage extends StatelessWidget {
                         Column(
                           children: [
                             SizedBox(
-                              height: 300,
-                              width: 200,
-                              child: SummaryMap(
-                                markers: _activityController.markerIterable,
-                                userLocation:
-                                    _activityController.currentLocation,
-                              ),
-                            ),
+                                height: 300,
+                                width: 200,
+                                child: GetX<ActivityController>(
+                                  builder: (controller) => SummaryMap(
+                                    markers: controller.markerIterable,
+                                    userLocation: controller.currentLocation,
+                                  ),
+                                )),
                           ],
                         ),
                         Column(

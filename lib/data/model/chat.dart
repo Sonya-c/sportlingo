@@ -19,17 +19,22 @@ class Chat {
             : []; // Provide an empty list if null
 
   static List<Message> _convertMessages(dynamic messagesJson) {
+    var msg;
+
     if (messagesJson is List) {
       // If it's already a list, process it directly
-      return messagesJson.map((item) => Message.fromJson(item)).toList();
+      msg = messagesJson.map((item) => Message.fromJson(item)).toList();
     } else if (messagesJson is Map) {
       // If it's a map, convert it to a list first
-      return messagesJson.values.map((item) => Message.fromJson(item)).toList();
+      var msg =
+          messagesJson.values.map((item) => Message.fromJson(item)).toList();
     } else {
       return []; // Return an empty list for any other case
     }
-  }
 
+    msg.sort((a, b) => b.date.compareTo(a.date));
+    return msg;
+  }
 
   toJson() {
     return {
