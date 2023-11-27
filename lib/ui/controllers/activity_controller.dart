@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:loggy/loggy.dart';
 import 'package:sportlingo/ui/controllers/user_controller.dart';
 import 'package:sportlingo/data/model/user_location.dart';
@@ -14,12 +15,15 @@ class ActivityController extends GetxController with UiLoggy {
   final RxDouble distance = 0.0.obs;
   final Rx<Duration> time = const Duration().obs;
   final Rx<ActivityStatus> status = ActivityStatus.nonstarted.obs;
+  final markers = <MarkerId, Marker>{}.obs;
 
   final userLocation = UserLocation(latitude: 0, longitude: 0).obs;
   final locatorService = Get.find<LocatorService>();
 
   late StreamSubscription<UserLocation> positionStreamSubscription;
   late Timer timer;
+
+  Iterable<Marker> get markerIterable => markers.values;
 
   double get currentDistance => distance.value;
   Duration get currentTime => time.value;
@@ -36,6 +40,7 @@ class ActivityController extends GetxController with UiLoggy {
     time.value = const Duration();
     distance.value = 0.0;
     userLocation.value = UserLocation(latitude: 0, longitude: 0);
+    markers.clear();
   }
 
   double calculateDistance(lat1, lon1, lat2, lon2) {
@@ -56,6 +61,16 @@ class ActivityController extends GetxController with UiLoggy {
         await locatorService.getLocation().onError((error, stackTrace) {
       return Future.error(error.toString());
     });
+
+    Marker marker = Marker(
+      infoWindow: const InfoWindow(title: '0', snippet: '*'),
+      icon: BitmapDescriptor.defaultMarker,
+      markerId: MarkerId(markers.length.toString()),
+      position:
+          LatLng(userLocation.value.latitude, userLocation.value.longitude),
+    );
+
+    markers[MarkerId(markers.length.toString())] = marker;
 
     distance.value += calculateDistance(
       prevUserLocation.latitude,
