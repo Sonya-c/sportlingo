@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sportlingo/ui/utils/text_styles.dart';
+import 'package:get/get.dart';
+import 'package:sportlingo/ui/pages/content/posts/post_page.dart';
+import 'package:sportlingo/ui/pages/content/profile/user_page.dart';
+import 'package:sportlingo/ui/widgets/posts_widgets/post_header.dart';
 
 class PostCard extends StatelessWidget {
   final String username;
@@ -19,35 +22,6 @@ class PostCard extends StatelessWidget {
     required this.upvote,
   });
 
-  Widget postCardTitle() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            const Icon(Icons.account_circle),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  username,
-                  style: sora['n']!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  "@$handle",
-                  style: sora['s'],
-                ),
-              ],
-            )
-          ],
-        ),
-        Text(date)
-      ],
-    );
-  }
-
   Widget postCardBody() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -63,7 +37,7 @@ class PostCard extends StatelessWidget {
                       body!,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
-                      softWrap: false,
+                      softWrap: true,
                     )
             ],
           ),
@@ -97,18 +71,32 @@ class PostCard extends StatelessWidget {
           BoxShadow(
             color: Colors.black.withOpacity(0.2),
             blurRadius: 5,
-            offset: const Offset(0, 3),
+            offset: const Offset(0, 1),
           )
         ],
       ),
-      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      margin: const EdgeInsets.symmetric(vertical: 5),
       padding: const EdgeInsets.all(10),
       child: Column(
         children: [
           Column(
             children: [
-              postCardTitle(),
-              postCardBody(),
+              InkWell(
+                child: PostHeader(
+                  username: username,
+                  handle: handle,
+                  date: date,
+                ),
+                onTap: () {
+                  Get.to(() => UserPage());
+                },
+              ),
+              InkWell(
+                child: postCardBody(),
+                onTap: () {
+                  Get.to(() => PostPage());
+                },
+              ),
             ],
           ),
         ],

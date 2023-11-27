@@ -13,17 +13,22 @@ class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 
   final _authController = Get.find<AuthController>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
-  final _emailController = TextEditingController();
-
-  final _passwordController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
-    ever(_authController.logged,
-        (isLogged) => isLogged ? Get.to(() => Content()) : null);
+    ever(
+        _authController.logged,
+        (isLogged) => isLogged
+            ? Get.to(
+                () => Content(),
+                transition: Transition.circularReveal,
+                duration: const Duration(seconds: 3),
+              )
+            : null);
 
     return Scaffold(
       body: ScrollLayout(
@@ -133,7 +138,9 @@ class LoginPage extends StatelessWidget {
                     TextButton(
                       key: const Key("loginPageSingupButton"),
                       onPressed: () {
-                        Get.to(() => SingupPage());
+                        Get.to(() => SingupPage(),
+                            transition: Transition.cupertino,
+                            duration: const Duration(seconds: 1));
                       },
                       child: Text(
                         "Sign Up",

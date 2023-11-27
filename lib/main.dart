@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
 import 'package:sportlingo/config/configuration.dart';
+import 'package:sportlingo/domain/use_case/locator_service.dart';
 import 'package:sportlingo/ui/app.dart';
 import 'package:sportlingo/ui/controllers/activity_controller.dart';
 import 'package:sportlingo/ui/controllers/auth_controller.dart';
@@ -31,6 +32,10 @@ Future<void> main() async {
         measurementId: Configuration.measurementId),
   );
 
+  // Add the services
+  Get.put(LocatorService());
+
+  // Add the controllers
   Get.put(AuthController());
   Get.put(UserController());
   Get.put(UsersController());
@@ -38,5 +43,5 @@ Future<void> main() async {
   Get.put(ChatController());
   Get.put(ActivityController());
 
-  runApp(const App());
+  runApp(App());
 }
