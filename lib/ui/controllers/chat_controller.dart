@@ -45,13 +45,14 @@ class ChatController extends GetxController with UiLoggy {
   }
 
   Future<void> sendMessage(String? chatKey, Message message) async {
+    chats.firstWhere((chat) => chat.key == chatKey).messages.add(message);
+
     await databaseRef
         .child('chats')
         .child(chatKey!)
         .child('messages')
         .push()
         .set(message.toJson());
-    // TODO: add message to chat
   }
 
   void getChatHistory(String chatKey) {

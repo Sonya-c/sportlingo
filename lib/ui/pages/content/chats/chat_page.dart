@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:loggy/loggy.dart';
+import 'package:intl/intl.dart';
 import 'package:sportlingo/data/model/chat.dart';
 import 'package:sportlingo/ui/controllers/chat_controller.dart';
 import 'package:sportlingo/ui/controllers/user_controller.dart';
@@ -22,13 +22,16 @@ class _ChatPageState extends State<ChatPage> {
   final userController = Get.find<UserController>();
   final usersController = Get.find<UsersController>();
 
+  final dateFormat = DateFormat('yyyy-MM-dd hh:mm');
+
   final TextEditingController _textEditingController = TextEditingController();
   final fromKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+    return Obx(
+      () => SafeArea(
+        child: Scaffold(
           appBar: AppBar(
             title: Row(
               children: [
@@ -57,8 +60,10 @@ class _ChatPageState extends State<ChatPage> {
                     padding: const EdgeInsets.all(10),
                     margin: const EdgeInsets.all(10),
                     child: PostComment(
-                      username: widget.chat.messages[index].from,
-                      date: widget.chat.messages[index].date.toString(),
+                      username: usersController
+                          .getUserById(widget.chat.messages[index].from)!
+                          .name,
+                      date: dateFormat.format(widget.chat.messages[index].date),
                       content: widget.chat.messages[index].content,
                     ),
                   );
@@ -109,7 +114,9 @@ class _ChatPageState extends State<ChatPage> {
                 ],
               ),
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 }
