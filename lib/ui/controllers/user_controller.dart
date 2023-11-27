@@ -50,7 +50,7 @@ class UserController extends GetxController with UiLoggy {
       Duration(minutes: _currentUser.value.timeGoal);
   List<Activity> get currentActivities => _currentUser.value.activities;
 
-  void registerActivity(double distance, Duration time) {
+  Future<void> registerActivity(double distance, Duration time) async {
     // Update local state
     DateTime currentDate = DateTime.now(); // Get the current date
     _currentUser.update((user) {
@@ -59,10 +59,10 @@ class UserController extends GetxController with UiLoggy {
     });
 
     // Update Firebase
-    _updateUserActivities();
+    await _updateUserActivities();
   }
 
-  void changeGoals(double goalDistance, Duration goalTime) {
+  Future<void> changeGoals(double goalDistance, Duration goalTime) async {
     // Update local state
     _currentUser.update((user) {
       user?.distanceGoal = goalDistance.toInt();
@@ -70,7 +70,7 @@ class UserController extends GetxController with UiLoggy {
     });
 
     // Update Firebase
-    _updateUserGoals();
+    await _updateUserGoals();
   }
 
   Future<void> createUser(
@@ -98,7 +98,7 @@ class UserController extends GetxController with UiLoggy {
     }
   }
 
-  void _updateUserActivities() {
+  Future<void> _updateUserActivities() async {
     // Convert activities to a format suitable for Firebase
     List<Map<String, dynamic>> activitiesData = _currentUser.value.activities
         .map((activity) {
@@ -107,15 +107,15 @@ class UserController extends GetxController with UiLoggy {
         .toList()
         .cast<Map<String, dynamic>>();
 
-    databaseRef
+    await databaseRef
         .child("users")
         .child(_currentUser.value.uid)
         .child("activities")
         .set(activitiesData);
   }
 
-  void _updateUserGoals() {
-    databaseRef.child("users").child(_currentUser.value.uid).update({
+  Future<void> _updateUserGoals() async {
+    await databaseRef.child("users").child(_currentUser.value.uid).update({
       "distanceGoal": _currentUser.value.distanceGoal,
       "timeGoal": _currentUser.value.timeGoal,
     });
