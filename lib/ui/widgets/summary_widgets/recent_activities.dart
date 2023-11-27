@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:sportlingo/ui/utils/text_styles.dart';
 import 'package:sportlingo/ui/utils/utils.dart';
 
@@ -52,17 +53,31 @@ class RecentActivities extends StatelessWidget {
             "Recent Activities",
             style: blackOpsOne['l'],
           ),
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: activities.length,
-            padding: const EdgeInsets.all(10),
-            itemBuilder: (context, index) {
-              return activityRow(
-                activities[index].distance,
-                activities[index].time,
-              );
-            },
-          ),
+          activities.isEmpty
+              ? Container(
+                  padding: const EdgeInsets.all(10),
+                  height: 200,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset('assets/run_logo.svg', height: 100),
+                      const SizedBox(width: 50),
+                      const Text("So empty... Let's run")
+                    ],
+                  ),
+                )
+              : ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: activities.length,
+                  padding: const EdgeInsets.all(10),
+                  itemBuilder: (context, index) {
+                    return activityRow(
+                      activities[index].distance,
+                      activities[index].time,
+                    );
+                  },
+                ),
         ],
       ),
     );
