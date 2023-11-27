@@ -15,10 +15,21 @@ class Chat {
       : key = snapshot.key ?? "0",
         people = List<String>.from(json['people'] ?? []),
         messages = json['messages'] != null
-            ? (json['messages'] as List)
-                .map((item) => Message.fromJson(item))
-                .toList()
+            ? _convertMessages(json['messages'])
             : []; // Provide an empty list if null
+
+  static List<Message> _convertMessages(dynamic messagesJson) {
+    if (messagesJson is List) {
+      // If it's already a list, process it directly
+      return messagesJson.map((item) => Message.fromJson(item)).toList();
+    } else if (messagesJson is Map) {
+      // If it's a map, convert it to a list first
+      return messagesJson.values.map((item) => Message.fromJson(item)).toList();
+    } else {
+      return []; // Return an empty list for any other case
+    }
+  }
+
 
   toJson() {
     return {

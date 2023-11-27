@@ -23,9 +23,22 @@ class _ChatPageState extends State<ChatPage> {
   final usersController = Get.find<UsersController>();
 
   final dateFormat = DateFormat('yyyy-MM-dd hh:mm');
-
   final TextEditingController _textEditingController = TextEditingController();
   final fromKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    // Subscribe to chat updates
+    chatController.getChatHistory(widget.chat.key!);
+  }
+
+  @override
+  void dispose() {
+    // Unsubscribe from chat updates
+    chatController.cancelChatSubscription(widget.chat.key!);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,17 +67,24 @@ class _ChatPageState extends State<ChatPage> {
               ListView.builder(
                 shrinkWrap: true,
                 physics: const ScrollPhysics(),
-                itemCount: widget.chat.messages.length,
+                itemCount: chatController.chats
+                    .firstWhere((chat) => chat.key == widget.chat.key)
+                    .messages
+                    .length,
                 itemBuilder: (context, index) {
+                  var message = chatController.chats
+                      .firstWhere((chat) => chat.key == widget.chat.key)
+                      .messages[index];
+
                   return Container(
                     padding: const EdgeInsets.all(10),
                     margin: const EdgeInsets.all(10),
                     child: PostComment(
                       username: usersController
-                          .getUserById(widget.chat.messages[index].from)!
+                          .getUserById(message.from)!
                           .name,
-                      date: dateFormat.format(widget.chat.messages[index].date),
-                      content: widget.chat.messages[index].content,
+                      date: dateFormat.format(message.date),
+                      content: message.content,
                     ),
                   );
                 },
