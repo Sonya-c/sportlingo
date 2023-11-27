@@ -67,6 +67,9 @@ class ProfilePage extends StatelessWidget {
                       if (value == null || value.isEmpty) {
                         return 'Please enter a distance';
                       }
+                      if (double.parse(value) <= 0) {
+                        return 'Please enter a distance geater than 0';
+                      }
                       return null;
                     },
                   ),
@@ -83,6 +86,11 @@ class ProfilePage extends StatelessWidget {
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter hours';
+                            }
+                            if (int.parse(value) <= 0 &&
+                                int.parse(timeMinutesGoalController.text) <=
+                                    0) {
+                              return 'Please enter a time';
                             }
                             return null;
                           },
@@ -103,6 +111,12 @@ class ProfilePage extends StatelessWidget {
                             if (value == null || value.isEmpty) {
                               return 'Please enter minutes';
                             }
+
+                            if (int.parse(value) <= 0 &&
+                                int.parse(timeHoursGoalController.text) <= 0) {
+                              return 'Please enter a time';
+                            }
+
                             return null;
                           },
                         ),

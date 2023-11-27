@@ -51,7 +51,9 @@ class DailyObjetives extends StatelessWidget {
                     child: CircularPercentIndicator(
                       radius: 50,
                       lineWidth: 10,
-                      percent: currentDistance / goalDistance,
+                      percent: currentDistance > goalDistance
+                          ? 1
+                          : currentDistance / goalDistance,
                       center: const Icon(
                         Icons.directions_run,
                         color: Colors.white,
@@ -65,14 +67,14 @@ class DailyObjetives extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    "${currentDistance}km",
+                    "${currentDistance.toStringAsFixed(2)}m",
                     style: sora['n']!.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    "${goalDistance}km",
+                    "${goalDistance}m",
                     style: sora['s']!.copyWith(
                       color: Colors.white,
                     ),
@@ -86,7 +88,9 @@ class DailyObjetives extends StatelessWidget {
                     child: CircularPercentIndicator(
                       radius: 50,
                       lineWidth: 10,
-                      percent: currentTime.inSeconds / goalTime.inSeconds,
+                      percent: currentTime.inSeconds > goalTime.inSeconds
+                          ? 1
+                          : currentTime.inSeconds / goalTime.inSeconds,
                       center: const Icon(Icons.timer, color: Colors.white),
                       progressColor: orange,
                       backgroundColor: Colors.white.withOpacity(

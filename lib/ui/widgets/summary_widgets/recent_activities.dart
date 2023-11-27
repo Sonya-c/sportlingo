@@ -9,23 +9,24 @@ class RecentActivities extends StatelessWidget {
 
   Widget activityRow(double distance, Duration duration) {
     return Container(
-        margin: const EdgeInsets.symmetric(vertical: 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            const Icon(Icons.directions_run),
-            Text(
-              "$distance km",
-              style: sora['n']!.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          const Icon(Icons.directions_run),
+          Text(
+            "${distance.toStringAsFixed(2)} m",
+            style: sora['n']!.copyWith(
+              fontWeight: FontWeight.bold,
             ),
-            Text(
-              printDuration(duration),
-              style: sora['n']!,
-            ),
-          ],
-        ));
+          ),
+          Text(
+            printDuration(duration),
+            style: sora['n']!,
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -57,8 +58,8 @@ class RecentActivities extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             itemBuilder: (context, index) {
               return activityRow(
-                activities[index]['distance'],
-                activities[index]['time'],
+                activities[index].distance,
+                activities[index].time,
               );
             },
           ),

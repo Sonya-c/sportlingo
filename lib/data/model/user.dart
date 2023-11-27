@@ -7,7 +7,7 @@ class User {
   String email;
   String uid;
   int timeGoal;
-  int distanceGoal;
+  double distanceGoal;
   List<Activity> activities;
   List<String> chats;
 
@@ -31,12 +31,14 @@ class User {
         uid = json['uid'] ?? "uid",
         timeGoal = json['timeGoal'] ?? 0,
         distanceGoal = json['distanceGoal'] ?? 0,
-        activities = json['activities'] != null 
-                    ? (json['activities'] as List).map((item) => Activity.fromJson(item)).toList()
-                    : [], // Provide an empty list if null
-        chats = json['chats'] != null 
-                ? List<String>.from(json['chats'])
-                : []; // Provide an empty list if null
+        activities = json['activities'] != null
+            ? (json['activities'] as List)
+                .map((item) => Activity.fromJson(item))
+                .toList()
+            : [], // Provide an empty list if null
+        chats = json['chats'] != null
+            ? List<String>.from(json['chats'])
+            : []; // Provide an empty list if null
 
   toJson() {
     return {
@@ -72,4 +74,3 @@ class Activity {
     };
   }
 }
-

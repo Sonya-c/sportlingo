@@ -73,7 +73,7 @@ class UserController extends GetxController with UiLoggy {
   Future<void> changeGoals(double goalDistance, Duration goalTime) async {
     // Update local state
     _currentUser.update((user) {
-      user?.distanceGoal = goalDistance.toInt();
+      user?.distanceGoal = goalDistance;
       user?.timeGoal = goalTime.inMinutes;
     });
 
