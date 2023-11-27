@@ -42,44 +42,45 @@ class ChatsPage extends StatelessWidget {
               ],
             ),
           ),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const ScrollPhysics(),
-            itemCount: chatController.chats.length,
-            itemBuilder: (context, index) {
-              return InkWell(
-                onTap: () {
-                  Get.to(
-                    () => ChatPage(
-                      chat: chatController.chats[index],
-                    ),
-                  );
-                },
-                child: Container(
-                  color: Colors.white,
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    children: [
-                      const CircleAvatar(),
-                      const SizedBox(width: 10),
-                      Text(
-                        usersController
-                            .getUserById(
-                                chatController.chats[index].people[0] ==
-                                        userController.currentUser.uid
-                                    ? chatController.chats[index].people[1]
-                                    : chatController.chats[index].people[0])!
-                            .name,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+          GetX<ChatController>(
+            builder: (controller) => ListView.builder(
+              shrinkWrap: true,
+              physics: const ScrollPhysics(),
+              itemCount: controller.chats.length,
+              itemBuilder: (context, index) {
+                return InkWell(
+                  onTap: () {
+                    Get.to(
+                      () => ChatPage(
+                        chat: controller.chats[index],
                       ),
-                    ],
+                    );
+                  },
+                  child: Container(
+                    color: Colors.white,
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      children: [
+                        const CircleAvatar(),
+                        const SizedBox(width: 10),
+                        Text(
+                          usersController
+                              .getUserById(controller.chats[index].people[0] ==
+                                      userController.currentUser.uid
+                                  ? controller.chats[index].people[1]
+                                  : controller.chats[index].people[0])!
+                              .name,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ],
       ),
