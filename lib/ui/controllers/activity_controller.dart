@@ -2,8 +2,6 @@ import 'dart:async';
 import 'dart:math';
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
-import 'package:firebase_database/firebase_database.dart';
-import '../../data/model/user.dart';
 import 'package:sportlingo/ui/controllers/user_controller.dart';
 import 'package:sportlingo/data/model/user_location.dart';
 import 'package:sportlingo/domain/use_case/locator_service.dart';
@@ -12,13 +10,6 @@ enum ActivityStatus { running, paused, finished, nonstarted }
 
 class ActivityController extends GetxController with UiLoggy {
   final UserController userController = Get.find();
-  final databaseRef = FirebaseDatabase.instance.ref();
-
-  final Rx<Activity> currentActivity = Activity(
-    date: DateTime.now(),
-    time: Duration(),
-    distance: 0.0,
-  ).obs;
 
   final RxDouble distance = 0.0.obs;
   final Rx<Duration> time = const Duration().obs;
@@ -34,22 +25,6 @@ class ActivityController extends GetxController with UiLoggy {
   Duration get currentTime => time.value;
   ActivityStatus get currentStatus => status.value;
   UserLocation get currentLocation => userLocation.value;
-
-  void _saveActivityToFirebase() {
-    String uid = userController.currentUser.uid;
-    if (uid.isNotEmpty) {
-      // Convert the current activity to a JSON map
-      Map<String, dynamic> activityData = currentActivity.value.toJson();
-
-      // Add the new activity to the user's activities list in Firebase
-      databaseRef
-          .child('users')
-          .child(uid)
-          .child('activities')
-          .push()
-          .set(activityData);
-    }
-  }
 
   @override
   void onInit() {
@@ -88,10 +63,6 @@ class ActivityController extends GetxController with UiLoggy {
       userLocation.value.latitude,
       userLocation.value.longitude,
     );
-
-    loggy.info(
-        "Location ${userLocation.value.latitude} ${userLocation.value.longitude}");
-    loggy.info("Distance  ${distance.value}");
   }
 
   Future<void> starActivity() async {
@@ -139,6 +110,8 @@ class ActivityController extends GetxController with UiLoggy {
 
     timer.cancel();
     await unSubscribeLocationUpdates();
+
+    await userController.registerActivity(distance.value, time.value);
 
     status.value = ActivityStatus.finished;
   }

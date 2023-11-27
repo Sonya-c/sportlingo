@@ -179,7 +179,7 @@ class RunPage extends StatelessWidget {
                           ),
                         ),
                       ],
-                    )
+                    ),
                   ],
       ),
     );

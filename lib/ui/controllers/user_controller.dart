@@ -21,7 +21,19 @@ class UserController extends GetxController with UiLoggy {
     chats: [],
   ).obs;
 
+  final distance = 0.0.obs;
+  final time = const Duration().obs;
+
   User get currentUser => _currentUser.value;
+
+  double get currentDistance => distance.value;
+  double get currentGoalDistance => _currentUser.value.distanceGoal.toDouble();
+
+  Duration get currentTime => time.value;
+  Duration get currentGoalTime =>
+      Duration(minutes: _currentUser.value.timeGoal);
+
+  List<Activity> get currentActivities => _currentUser.value.activities;
 
   UserController() {
     _loadCurrentUser();
@@ -43,15 +55,11 @@ class UserController extends GetxController with UiLoggy {
     }
   }
 
-  double get currentDistance => _currentUser.value.distanceGoal.toDouble();
-  double get currentGoalDistance => _currentUser.value.distanceGoal.toDouble();
-  Duration get currentTime => Duration(minutes: _currentUser.value.timeGoal);
-  Duration get currentGoalTime =>
-      Duration(minutes: _currentUser.value.timeGoal);
-  List<Activity> get currentActivities => _currentUser.value.activities;
-
   Future<void> registerActivity(double distance, Duration time) async {
     // Update local state
+    this.distance.value += distance;
+    this.time.value += time;
+
     DateTime currentDate = DateTime.now(); // Get the current date
     _currentUser.update((user) {
       user?.activities

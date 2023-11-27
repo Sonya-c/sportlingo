@@ -4,7 +4,6 @@ import 'package:sportlingo/ui/controllers/user_controller.dart';
 import 'package:sportlingo/ui/utils/scroll_layout.dart';
 import 'package:sportlingo/ui/widgets/summary_widgets/daily_objetives.dart';
 import 'package:sportlingo/ui/widgets/summary_widgets/recent_activities.dart';
-import 'package:sportlingo/ui/widgets/summary_widgets/top_posts.dart';
 
 class HomePage extends StatelessWidget {
   final _userController = Get.find<UserController>();
@@ -27,7 +26,6 @@ class HomePage extends StatelessWidget {
           RecentActivities(
             activities: _userController.currentActivities,
           ),
-          const TopPosts(),
           const SizedBox(
             height: kBottomNavigationBarHeight,
           )
