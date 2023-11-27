@@ -45,13 +45,17 @@ class AuthController extends GetxController {
       }
     }
   }
+  
   Future<UserCredential?> loginWithGoogle() async {
     try {
       // Trigger the Google Sign In process
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
 
       // If cancelled by user, googleUser will be null
-      if (googleUser == null) return null;
+      if (googleUser == null) {
+        logged.value = false; // Update logged status
+        return null;
+      }
 
       // Obtain the auth details from the request
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
@@ -63,9 +67,13 @@ class AuthController extends GetxController {
       );
 
       // Sign in to Firebase with the Google user credentials
-      return await _auth.signInWithCredential(credential);
+      UserCredential userCredential = await _auth.signInWithCredential(credential);
+      logged.value = true; // Update logged status
+      return userCredential;
+
     } catch (e) {
       Get.snackbar("Login Error", "Failed to sign in with Google: $e");
+      logged.value = false; // Update logged status
       return null;
     }
   }

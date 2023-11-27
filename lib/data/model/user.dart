@@ -30,7 +30,7 @@ class User {
         email = json['email'] ?? "email",
         uid = json['uid'] ?? "uid",
         timeGoal = json['timeGoal'] ?? 0,
-        distanceGoal = json['distanceGoal'] ?? 0,
+        distanceGoal = (json['distanceGoal'] ?? 0).toDouble(),
         activities = json['activities'] != null
             ? (json['activities'] as List)
                 .map((item) => Activity.fromJson(item))
@@ -63,13 +63,18 @@ class Activity {
 
   Activity.fromJson(Map<dynamic, dynamic> json)
       : date = DateTime.parse(json['date']),
-        time = Duration(minutes: json['time'] ?? 0),
-        distance = json['distance'] ?? 0.0;
+        // Use seconds if available; otherwise, fall back to minutes
+        time = Duration(
+          seconds: json['timeInSeconds'] ?? 
+                  (json['time'] ?? 0) * 60, // Convert minutes to seconds
+        ),
+        distance = (json['distance'] ?? 0.0).toDouble();
 
   Map<String, dynamic> toJson() {
     return {
       "date": date.toIso8601String(),
-      "time": time.inMinutes,
+      // Store duration in seconds
+      "timeInSeconds": time.inSeconds,
       "distance": distance,
     };
   }

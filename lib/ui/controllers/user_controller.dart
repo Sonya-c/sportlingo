@@ -16,7 +16,7 @@ class UserController extends GetxController with UiLoggy {
     email: '',
     uid: '',
     timeGoal: 0,
-    distanceGoal: 0,
+    distanceGoal: 0.0,
     activities: [],
     chats: [],
   ).obs;
@@ -94,7 +94,7 @@ class UserController extends GetxController with UiLoggy {
         email: email,
         uid: uid,
         timeGoal: 0,
-        distanceGoal: 0,
+        distanceGoal: 0.0,
         activities: [],
         chats: [],
       );
