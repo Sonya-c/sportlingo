@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportlingo/ui/controllers/chat_controller.dart';
 import 'package:sportlingo/ui/pages/content/chats/chat_page.dart';
+import 'package:sportlingo/ui/pages/content/chats/search_chat_page.dart';
 import 'package:sportlingo/ui/utils/colors.dart';
 import 'package:sportlingo/ui/utils/scroll_layout.dart';
 import 'package:sportlingo/ui/utils/text_styles.dart';
@@ -15,7 +16,7 @@ class ChatsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => ScrollLayout(
-        backgroundColor: Colors.grey.shade100,
+        backgroundColor: const Color.fromARGB(255, 236, 236, 236),
         alignment: Alignment.topLeft,
         children: [
           Container(
@@ -29,7 +30,9 @@ class ChatsPage extends StatelessWidget {
                 ),
                 const Spacer(),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(() => SearchChatPage());
+                  },
                   icon: const Icon(Icons.search),
                 )
               ],

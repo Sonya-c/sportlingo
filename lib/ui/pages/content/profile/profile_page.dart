@@ -161,6 +161,9 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ],
                   ),
+                  const SizedBox(
+                    height: 15,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
