@@ -35,8 +35,12 @@ class UserController extends GetxController with UiLoggy {
 
   List<Activity> get currentActivities => _currentUser.value.activities;
 
-  UserController() {
+  @override
+  void onInit() {
+    loggy.info("Initializing...");
     _loadCurrentUser();
+    ever(authController.logged, (logged) => _loadCurrentUser());
+    super.onInit();
   }
 
   void _loadCurrentUser() {

@@ -44,7 +44,7 @@ class _ContentState extends State<Content> {
           children: <Widget>[
             HomePage(),
             RunPage(),
-            const ChatsPage(),
+            ChatsPage(),
             ProfilePage(),
           ],
         ),

@@ -9,7 +9,7 @@ import 'package:sportlingo/domain/use_case/locator_service.dart';
 enum ActivityStatus { running, paused, finished, nonstarted }
 
 class ActivityController extends GetxController with UiLoggy {
-  final UserController userController = Get.find();
+  final userController = Get.find<UserController>();
 
   final RxDouble distance = 0.0.obs;
   final Rx<Duration> time = const Duration().obs;

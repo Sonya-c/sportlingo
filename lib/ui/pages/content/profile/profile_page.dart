@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sportlingo/ui/controllers/auth_controller.dart';
 import 'package:sportlingo/ui/controllers/user_controller.dart';
 import 'package:sportlingo/ui/utils/scroll_layout.dart';
 import 'package:sportlingo/ui/utils/text_styles.dart';
@@ -8,6 +9,7 @@ class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
 
   final userController = Get.find<UserController>();
+  final authController = Get.find<AuthController>();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -124,31 +126,63 @@ class ProfilePage extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 20),
-                  FilledButton(
-                    onPressed: () async {
-                      FocusScope.of(context).requestFocus(FocusNode());
-                      final form = _formKey.currentState;
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FilledButton(
+                        onPressed: () async {
+                          FocusScope.of(context).requestFocus(FocusNode());
+                          final form = _formKey.currentState;
 
-                      form!.save();
+                          form!.save();
 
-                      if (form.validate()) {
-                        await userController.changeGoals(
-                          double.parse(distanceGoalController.text),
-                          Duration(
-                            hours: int.parse(timeHoursGoalController.text),
-                            minutes: int.parse(timeMinutesGoalController.text),
+                          if (form.validate()) {
+                            await userController.changeGoals(
+                              double.parse(distanceGoalController.text),
+                              Duration(
+                                hours: int.parse(timeHoursGoalController.text),
+                                minutes:
+                                    int.parse(timeMinutesGoalController.text),
+                              ),
+                            );
+                          }
+                        },
+                        style: ButtonStyle(
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
-                        );
-                      }
-                    },
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: const Text(
+                          "Save",
+                          style: TextStyle(fontSize: 20),
                         ),
                       ),
-                    ),
-                    child: const Text("Save"),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      OutlinedButton(
+                        onPressed: () {
+                          authController.logout();
+                        },
+                        style: ButtonStyle(
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                        child: const Text(
+                          "Salir",
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ],
                   )
                 ],
               ),

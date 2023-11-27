@@ -1,14 +1,22 @@
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:sportlingo/ui/controllers/auth_controller.dart';
 import '../../data/model/chat.dart';
 
 class ChatController extends GetxController with UiLoggy {
   final databaseRef = FirebaseDatabase.instance.ref();
+  final authController = Get.find<AuthController>();
 
   final RxList<Chat> _chats = <Chat>[].obs;
 
   List<Chat> get chats => _chats.toList();
+
+  @override
+  void onInit() {
+    super.onInit();
+    ever(authController.logged, (logged) => loggy.info(logged));
+  }
 
   Future<void> createChat(List<String> people) async {
     Chat newChat = Chat(people: people, messages: []);
@@ -19,10 +27,14 @@ class ChatController extends GetxController with UiLoggy {
   }
 
   Future<void> sendMessage(String chatKey, Message message) async {
-    await databaseRef.child('chats').child(chatKey).child('messages').push().set(message.toJson());
+    await databaseRef
+        .child('chats')
+        .child(chatKey)
+        .child('messages')
+        .push()
+        .set(message.toJson());
     // Update local chat list if needed
   }
-
 
   void getChatHistory(String chatKey) {
     databaseRef.child('chats').child(chatKey).onValue.listen((event) {
@@ -41,5 +53,4 @@ class ChatController extends GetxController with UiLoggy {
     await databaseRef.child('chats').child(chatKey).remove();
     _chats.removeWhere((chat) => chat.key == chatKey);
   }
-  
 }
