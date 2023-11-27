@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportlingo/ui/controllers/chat_controller.dart';
+import 'package:sportlingo/ui/controllers/user_controller.dart';
+import 'package:sportlingo/ui/controllers/users_controller.dart';
 import 'package:sportlingo/ui/pages/content/chats/chat_page.dart';
 import 'package:sportlingo/ui/pages/content/chats/search_chat_page.dart';
 import 'package:sportlingo/ui/utils/colors.dart';
@@ -11,6 +13,8 @@ class ChatsPage extends StatelessWidget {
   ChatsPage({super.key});
 
   final chatController = Get.find<ChatController>();
+  final userController = Get.find<UserController>();
+  final usersController = Get.find<UsersController>();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +49,11 @@ class ChatsPage extends StatelessWidget {
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () {
-                  Get.to(() => const ChatPage());
+                  Get.to(
+                    () => ChatPage(
+                      chat: chatController.chats[index],
+                    ),
+                  );
                 },
                 child: Container(
                   color: Colors.white,
@@ -54,7 +62,19 @@ class ChatsPage extends StatelessWidget {
                     children: [
                       const CircleAvatar(),
                       const SizedBox(width: 10),
-                      Text(chatController.chats[index].people[0]),
+                      Text(
+                        usersController
+                            .getUserById(
+                                chatController.chats[index].people[0] ==
+                                        userController.currentUser.uid
+                                    ? chatController.chats[index].people[1]
+                                    : chatController.chats[index].people[0])!
+                            .name,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ],
                   ),
                 ),

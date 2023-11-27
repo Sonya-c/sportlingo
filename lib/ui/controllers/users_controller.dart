@@ -3,7 +3,7 @@ import '../../data/model/user.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class UsersController extends GetxController {
-  var _users = <User>[].obs; 
+  final _users = <User>[].obs;
   final databaseRef = FirebaseDatabase.instance.ref();
 
   List<User> get users => _users.toList();
@@ -24,6 +24,4 @@ class UsersController extends GetxController {
   User? getUserById(String userId) {
     return _users.firstWhereOrNull((user) => user.uid == userId);
   }
-
 }
-

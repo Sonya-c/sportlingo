@@ -15,25 +15,43 @@ class ChatController extends GetxController with UiLoggy {
   @override
   void onInit() {
     super.onInit();
-    ever(authController.logged, (logged) => loggy.info(logged));
+    ever(authController.logged, (logged) => getChats());
   }
 
-  Future<void> createChat(List<String> people) async {
+  Future<void> getChats() async {
+    // TODO: get chats from a user
+    // copilot created this
+    // this is called each time the user is loged
+
+    /* databaseRef.child('chats').onValue.listen((event) {
+      final chatsData = event.snapshot.value as Map<dynamic, dynamic>;
+      List<Chat> chats = [];
+      chatsData.forEach((key, value) {
+        chats.add(Chat.fromJson(event.snapshot, value));
+      });
+      _chats.value = chats;
+    });*/
+  }
+
+  Future<Chat> createChat(List<String> people) async {
     Chat newChat = Chat(people: people, messages: []);
+    // TODO: check if chat already exists
     DatabaseReference newChatRef = await databaseRef.child('chats').push();
     newChat.key = newChatRef.key;
     await newChatRef.set(newChat.toJson());
     _chats.add(newChat);
+
+    return newChat;
   }
 
-  Future<void> sendMessage(String chatKey, Message message) async {
+  Future<void> sendMessage(String? chatKey, Message message) async {
     await databaseRef
         .child('chats')
-        .child(chatKey)
+        .child(chatKey!)
         .child('messages')
         .push()
         .set(message.toJson());
-    // Update local chat list if needed
+    // TODO: add message to chat
   }
 
   void getChatHistory(String chatKey) {

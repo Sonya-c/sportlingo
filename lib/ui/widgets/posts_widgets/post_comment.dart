@@ -10,7 +10,7 @@ class PostComment extends StatelessWidget {
   const PostComment({
     super.key,
     required this.username,
-    required this.handle,
+    this.handle = "",
     required this.date,
     required this.content,
   });
