@@ -43,5 +43,5 @@ Future<void> main() async {
   Get.put(ChatController());
   Get.put(ActivityController());
 
-  runApp(App());
+  runApp(const App());
 }

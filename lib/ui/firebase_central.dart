@@ -10,12 +10,12 @@ class FirebaseCentral extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _authController = Get.find<AuthController>();
+    final authController = Get.find<AuthController>();
     return StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return _authController.isLogged ? Content() : LoginPage();
+            return authController.isLogged ? Content() : LoginPage();
           } else {
             return LoginPage();
           }
