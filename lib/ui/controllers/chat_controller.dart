@@ -31,26 +31,29 @@ class ChatController extends GetxController with UiLoggy {
 
   Future<void> getChats() async {
     try {
-      String currentUserId = authController.getUid(); // Assuming this method exists in your AuthController
+      String currentUserId = authController.getUid(); // Ensure this gets the correct user ID
       DataSnapshot userSnapshot = await databaseRef.child('users').child(currentUserId).get();
       Map<dynamic, dynamic> userData = userSnapshot.value as Map<dynamic, dynamic>;
 
       List<String> chatIds = List<String>.from(userData['chats'] ?? []);
 
-      for (String chatId in chatIds) {
-        // Fetch each chat's details
-        DataSnapshot chatSnapshot = await databaseRef.child('chats').child(chatId).get();
-        Map<dynamic, dynamic> chatData = chatSnapshot.value as Map<dynamic, dynamic>;
-        Chat chat = Chat.fromJson(chatSnapshot, chatData);
+      _chats.clear(); // Clear existing chats before fetching new ones
 
-        // Add chat to local list and set up real-time listener
-        _chats.add(chat);
-        getChatHistory(chatId);
+      for (String chatId in chatIds) {
+        DataSnapshot chatSnapshot = await databaseRef.child('chats').child(chatId).get();
+        if (chatSnapshot.exists) {
+          Map<dynamic, dynamic> chatData = chatSnapshot.value as Map<dynamic, dynamic>;
+          Chat chat = Chat.fromJson(chatSnapshot, chatData);
+          _chats.add(chat); // Add each chat to the observable list
+          // Optionally, set up real-time listener for each chat
+          getChatHistory(chatId);
+        }
       }
     } catch (e) {
       logError("Error fetching chats: $e");
     }
   }
+  
 
   Future<Chat> createChat(List<String> people) async {
     // Sort the list to ensure consistent order regardless of how the IDs are passed
