@@ -6,6 +6,7 @@ import 'package:sportlingo/ui/utils/colors.dart';
 import 'package:sportlingo/ui/utils/scroll_layout.dart';
 import 'package:sportlingo/ui/utils/text_styles.dart';
 import 'package:sportlingo/ui/utils/utils.dart';
+import 'package:sportlingo/ui/widgets/summary_map.dart';
 
 class RunPage extends StatelessWidget {
   RunPage({super.key});
@@ -53,11 +54,16 @@ class RunPage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        const Column(
+                        Column(
                           children: [
-                            Placeholder(
-                              fallbackHeight: 200,
-                              fallbackWidth: 100,
+                            SizedBox(
+                              height: 300,
+                              width: 200,
+                              child: SummaryMap(
+                                markers: _activityController.markerIterable,
+                                userLocation:
+                                    _activityController.currentLocation,
+                              ),
                             ),
                           ],
                         ),
