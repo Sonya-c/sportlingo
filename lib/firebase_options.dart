@@ -49,6 +49,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1002776845743',
     projectId: 'sportlingo-a93f2',
     authDomain: 'sportlingo-a93f2.firebaseapp.com',
+    databaseURL: 'https://sportlingo-a93f2-default-rtdb.firebaseio.com',
     storageBucket: 'sportlingo-a93f2.appspot.com',
     measurementId: 'G-K4C2SXMZ2T',
   );
@@ -58,6 +59,7 @@ class DefaultFirebaseOptions {
     appId: '1:1002776845743:android:f56f1a358b76a72be6635a',
     messagingSenderId: '1002776845743',
     projectId: 'sportlingo-a93f2',
+    databaseURL: 'https://sportlingo-a93f2-default-rtdb.firebaseio.com',
     storageBucket: 'sportlingo-a93f2.appspot.com',
   );
 
@@ -66,7 +68,10 @@ class DefaultFirebaseOptions {
     appId: '1:1002776845743:ios:9248bf29fe895019e6635a',
     messagingSenderId: '1002776845743',
     projectId: 'sportlingo-a93f2',
+    databaseURL: 'https://sportlingo-a93f2-default-rtdb.firebaseio.com',
     storageBucket: 'sportlingo-a93f2.appspot.com',
+    androidClientId: '1002776845743-g58ukattjsn20qgjjijkque27t1ont6k.apps.googleusercontent.com',
+    iosClientId: '1002776845743-sihep0mep3q22q5gkqg9qg0v4nkeq6j9.apps.googleusercontent.com',
     iosBundleId: 'com.example.sportlingo',
   );
 
@@ -75,7 +80,10 @@ class DefaultFirebaseOptions {
     appId: '1:1002776845743:ios:4b3a7d0593039c47e6635a',
     messagingSenderId: '1002776845743',
     projectId: 'sportlingo-a93f2',
+    databaseURL: 'https://sportlingo-a93f2-default-rtdb.firebaseio.com',
     storageBucket: 'sportlingo-a93f2.appspot.com',
+    androidClientId: '1002776845743-g58ukattjsn20qgjjijkque27t1ont6k.apps.googleusercontent.com',
+    iosClientId: '1002776845743-qhm2qql6g7j8la47lcicb47pkrqrm9lf.apps.googleusercontent.com',
     iosBundleId: 'com.example.sportlingo.RunnerTests',
   );
 }

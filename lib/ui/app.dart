@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sportlingo/ui/firebase_central.dart';
 // import 'package:sportlingo/ui/controllers/auth_controller.dart';
 // import 'package:sportlingo/ui/pages/authentication/login_page.dart';
 import 'package:sportlingo/ui/pages/content/content.dart';
@@ -20,7 +21,7 @@ class App extends StatelessWidget {
         useMaterial3: true,
       ),
       // home: _authController.isLogged ? Content() : LoginPage(),
-      home: Content(),
+      home: const FirebaseCentral(),
     );
   }
 }
