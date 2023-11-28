@@ -1,4 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:get/get.dart';
 
 class Chat {
   String? key;
@@ -19,21 +20,21 @@ class Chat {
             : []; // Provide an empty list if null
 
   static List<Message> _convertMessages(dynamic messagesJson) {
-    var msg;
+    List<Message> messages;
 
     if (messagesJson is List) {
       // If it's already a list, process it directly
-      msg = messagesJson.map((item) => Message.fromJson(item)).toList();
+      messages = messagesJson.map((item) => Message.fromJson(item)).toList();
     } else if (messagesJson is Map) {
       // If it's a map, convert it to a list first
-      var msg =
+      messages =
           messagesJson.values.map((item) => Message.fromJson(item)).toList();
     } else {
       return []; // Return an empty list for any other case
     }
 
-    msg.sort((a, b) => b.date.compareTo(a.date));
-    return msg;
+    messages.sort((a, b) => a.date.compareTo(b.date));
+    return messages;
   }
 
   toJson() {

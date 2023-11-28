@@ -1,31 +1,75 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:loggy/loggy.dart';
+
 import 'package:sportlingo/data/model/chat.dart';
 import 'package:sportlingo/ui/controllers/chat_controller.dart';
-import 'package:sportlingo/ui/controllers/user_controller.dart';
 import 'package:sportlingo/ui/controllers/users_controller.dart';
+import 'package:sportlingo/ui/controllers/user_controller.dart';
+
 import 'package:sportlingo/ui/utils/scroll_layout.dart';
 import 'package:sportlingo/ui/widgets/posts_widgets/post_comment.dart';
 
 class ChatPage extends StatefulWidget {
-  final Chat chat;
-
-  const ChatPage({super.key, required this.chat});
+  const ChatPage({super.key});
 
   @override
   State<ChatPage> createState() => _ChatPageState();
 }
 
 class _ChatPageState extends State<ChatPage> {
-  final chatController = Get.find<ChatController>();
   final userController = Get.find<UserController>();
   final usersController = Get.find<UsersController>();
+  final chatController = Get.find<ChatController>();
 
   final dateFormat = DateFormat('yyyy-MM-dd hh:mm');
-  final _textEditingController = TextEditingController();
-  final fromKey = GlobalKey<FormState>();
+
+  late TextEditingController _textEditingController;
+  late GlobalKey<FormState> fromKey;
+
+  dynamic argumentData = Get.arguments;
+  late String chatKey;
+
+  @override
+  void initState() {
+    super.initState();
+
+    chatKey = argumentData;
+
+    _textEditingController = TextEditingController();
+    fromKey = GlobalKey<FormState>();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  Widget _list() {
+    return GetX<ChatController>(builder: (controller) {
+      final chat =
+          controller.chats.firstWhere((element) => element.key == chatKey);
+
+      return ListView.builder(
+        shrinkWrap: true,
+        physics: const ScrollPhysics(),
+        itemCount: chat.messages.length,
+        itemBuilder: (context, index) {
+          var message = chat.messages[index];
+
+          return Container(
+            padding: const EdgeInsets.all(10),
+            margin: const EdgeInsets.all(10),
+            child: PostComment(
+              username: usersController.getUserById(message.from)!.name,
+              date: dateFormat.format(message.date),
+              content: message.content,
+            ),
+          );
+        },
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,43 +82,25 @@ class _ChatPageState extends State<ChatPage> {
               const SizedBox(width: 10),
               Text(
                 usersController
-                    .getUserById(
-                        widget.chat.people[0] == userController.currentUser.uid
-                            ? widget.chat.people[1]
-                            : widget.chat.people[0])!
+                    .getUserById(chatController.chats
+                        .firstWhere((element) => element.key == chatKey)!
+                        .people
+                        .firstWhere((element) =>
+                            element != userController.currentUser.uid)
+                        .toString())!
                     .name,
               ),
             ],
           ),
         ),
         body: ScrollLayout(
+          backgroundColor: const Color.fromARGB(255, 236, 236, 236),
           alignment: Alignment.bottomCenter,
           children: [
-            GetX<ChatController>(
-              builder: (controller) => ListView.builder(
-                shrinkWrap: true,
-                physics: const ScrollPhysics(),
-                itemCount: controller.chats
-                    .firstWhere((chat) => chat.key == widget.chat.key)
-                    .messages
-                    .length,
-                itemBuilder: (context, index) {
-                  var message = controller.chats
-                      .firstWhere((chat) => chat.key == widget.chat.key)
-                      .messages[index];
-
-                  return Container(
-                    padding: const EdgeInsets.all(10),
-                    margin: const EdgeInsets.all(10),
-                    child: PostComment(
-                      username: usersController.getUserById(message.from)!.name,
-                      date: dateFormat.format(message.date),
-                      content: message.content,
-                    ),
-                  );
-                },
-              ),
-            ),
+            _list(),
+            const SizedBox(
+              height: 100,
+            )
           ],
         ),
         bottomSheet: Container(
@@ -105,7 +131,7 @@ class _ChatPageState extends State<ChatPage> {
                   onPressed: () {
                     if (fromKey.currentState!.validate()) {
                       chatController.sendMessage(
-                        widget.chat.key,
+                        chatKey,
                         Message(
                           from: userController.currentUser.uid,
                           content: _textEditingController.text,

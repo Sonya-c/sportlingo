@@ -73,11 +73,8 @@ class _ChatsPageState extends State<ChatsPage> {
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () {
-                  Get.to(
-                    () => ChatPage(
-                      chat: controller.chats[index],
-                    ),
-                  );
+                  Get.to(() => const ChatPage(),
+                      arguments: controller.chats[index].key);
                 },
                 child: Container(
                   color: Colors.white,

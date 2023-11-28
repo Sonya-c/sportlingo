@@ -17,9 +17,7 @@ class SearchChatPage extends StatefulWidget {
 
 class _SearchChatPageState extends State<SearchChatPage> {
   final userController = Get.find<UserController>();
-
   final usersController = Get.find<UsersController>();
-
   final chatController = Get.find<ChatController>();
 
   @override
@@ -55,7 +53,7 @@ class _SearchChatPageState extends State<SearchChatPage> {
               ]);
 
               Get.back();
-              Get.to(() => ChatPage(chat: chat));
+              Get.to(() => const ChatPage(), arguments: [chat.key]);
             },
             child: Container(
               padding: const EdgeInsets.all(10),
