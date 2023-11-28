@@ -53,7 +53,7 @@ class _SearchChatPageState extends State<SearchChatPage> {
               ]);
 
               Get.back();
-              Get.to(() => const ChatPage(), arguments: [chat.key]);
+              Get.to(() => const ChatPage(), arguments: chat.key);
             },
             child: Container(
               padding: const EdgeInsets.all(10),
