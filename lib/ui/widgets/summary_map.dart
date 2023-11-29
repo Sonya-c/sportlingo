@@ -38,31 +38,47 @@ class _SummaryMapState extends State<SummaryMap> {
         northeast: LatLng(northeastLat, northeastLon));
   }
 
+  Set<Polyline> _createPolylines(Set<Marker> markers) {
+    // Create a Polyline connecting the markers
+    List<LatLng> polylineCoordinates =
+        markers.map((marker) => marker.position).toList();
+
+    return <Polyline>{
+      Polyline(
+        polylineId: const PolylineId('route'),
+        color: Colors.blue,
+        width: 3,
+        points: polylineCoordinates,
+      ),
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     logInfo("MARKERS", widget.markers.toString());
 
     return GoogleMap(
-        onMapCreated: (GoogleMapController controller) {
-          googleMapController = controller;
-          if (widget.markers.isNotEmpty) {
-            googleMapController.animateCamera(CameraUpdate.newLatLngBounds(
-                _bounds(Set<Marker>.of(widget.markers as Iterable<Marker>)),
-                50));
-          } else {
-            if (widget.userLocation.latitude != 0) {
-              googleMapController.moveCamera(CameraUpdate.newLatLng(LatLng(
-                  widget.userLocation.latitude,
-                  widget.userLocation.longitude)));
-            }
+      onMapCreated: (GoogleMapController controller) {
+        googleMapController = controller;
+        if (widget.markers.isNotEmpty) {
+          googleMapController.animateCamera(CameraUpdate.newLatLngBounds(
+              _bounds(Set<Marker>.of(widget.markers as Iterable<Marker>)), 50));
+        } else {
+          if (widget.userLocation.latitude != 0) {
+            googleMapController.moveCamera(CameraUpdate.newLatLng(LatLng(
+                widget.userLocation.latitude, widget.userLocation.longitude)));
           }
-        },
-        mapType: MapType.normal,
-        markers: Set<Marker>.of(widget.markers as Iterable<Marker>),
-        myLocationEnabled: true,
-        initialCameraPosition: const CameraPosition(
-          target: LatLng(11.0227767, -74.81611),
-          zoom: 17.0,
-        ));
+        }
+      },
+      mapType: MapType.normal,
+      // markers: Set<Marker>.of(widget.markers as Iterable<Marker>),
+      polylines:
+          _createPolylines(Set<Marker>.of(widget.markers as Iterable<Marker>)),
+      myLocationEnabled: false,
+      initialCameraPosition: const CameraPosition(
+        target: LatLng(11.0227767, -74.81611),
+        zoom: 17.0,
+      ),
+    );
   }
 }

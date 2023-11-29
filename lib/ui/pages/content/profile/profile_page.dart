@@ -42,10 +42,6 @@ class ProfilePage extends StatelessWidget {
             userController.currentUser.name,
             style: blackOpsOne['2xl'],
           ),
-          Text(
-            "@${userController.currentUser.username}",
-            style: const TextStyle(fontSize: 25),
-          ),
           const SizedBox(height: 50),
           Form(
             key: _formKey,
@@ -179,7 +175,7 @@ class ProfilePage extends StatelessWidget {
                           ),
                         ),
                         child: const Text(
-                          "Salir",
+                          "Log out",
                           style: TextStyle(
                             fontSize: 20,
                           ),

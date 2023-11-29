@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:loggy/loggy.dart';
 
 import 'package:sportlingo/data/model/chat.dart';
 import 'package:sportlingo/ui/controllers/chat_controller.dart';
 import 'package:sportlingo/ui/controllers/users_controller.dart';
 import 'package:sportlingo/ui/controllers/user_controller.dart';
 
-import 'package:sportlingo/ui/utils/scroll_layout.dart';
 import 'package:sportlingo/ui/widgets/posts_widgets/post_comment.dart';
 
 class ChatPage extends StatefulWidget {
@@ -25,6 +25,7 @@ class _ChatPageState extends State<ChatPage> {
   final dateFormat = DateFormat('yyyy-MM-dd hh:mm');
 
   late TextEditingController _textEditingController;
+  late ScrollController _scrollController;
   late GlobalKey<FormState> fromKey;
 
   dynamic argumentData = Get.arguments;
@@ -37,26 +38,43 @@ class _ChatPageState extends State<ChatPage> {
     chatKey = argumentData;
 
     _textEditingController = TextEditingController();
+    _scrollController = ScrollController();
+
     fromKey = GlobalKey<FormState>();
   }
 
   @override
   void dispose() {
+    _textEditingController.dispose();
+    _scrollController.dispose();
+
     super.dispose();
+  }
+
+  _scrollToEnd() async {
+    logInfo('Scroll to end');
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.easeInOut,
+    );
   }
 
   Widget _list() {
     return GetX<ChatController>(builder: (controller) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToEnd());
+
       final chat =
           controller.chats.firstWhere((element) => element.key == chatKey);
 
       return ListView.builder(
         shrinkWrap: true,
-        physics: const ScrollPhysics(),
+        padding: const EdgeInsets.fromLTRB(0, 0, 0, 100),
+        // physics: const ScrollPhysics(),
+        controller: _scrollController,
         itemCount: chat.messages.length,
         itemBuilder: (context, index) {
           var message = chat.messages[index];
-
           return Container(
             padding: const EdgeInsets.all(10),
             margin: const EdgeInsets.all(10),
@@ -73,6 +91,8 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToEnd());
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -93,16 +113,7 @@ class _ChatPageState extends State<ChatPage> {
             ],
           ),
         ),
-        body: ScrollLayout(
-          backgroundColor: const Color.fromARGB(255, 236, 236, 236),
-          alignment: Alignment.bottomCenter,
-          children: [
-            _list(),
-            const SizedBox(
-              height: 100,
-            )
-          ],
-        ),
+        body: _list(),
         bottomSheet: Container(
           padding: const EdgeInsets.all(10),
           child: Form(
